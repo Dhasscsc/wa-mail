@@ -1,0 +1,2103 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>தாஸ் பொது சேவை மையம் - சேவை விபரங்கள் & ஆவணங்கள்</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #4F46E5; --primary-dark: #4338CA; --secondary: #D97706; --secondary-dark: #B45309;
+            --success: #059669; --danger: #DC2626; --light: #F3F4F6; --dark: #1F2937; --gray: #6B7280;
+            --purple: #8E44AD; --purple-dark: #6C3483; --blue: #3498DB; --blue-dark: #2980B9;
+            --email: #E74C3C; --email-dark: #C0392B; --teal: #0D9488; --teal-dark: #0F766E;
+        }
+        body {
+            font-family: 'Arial', sans-serif; background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
+            min-height: 100vh; padding: 20px; color: var(--dark);
+        }
+        .container {
+            max-width: 1200px; margin: 0 auto; background: white; border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white; padding: 25px 30px; text-align: center; position: relative;
+        }
+        .logo-container { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px; }
+        .logo {
+            width: 60px; height: 60px; background: white; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-size: 30px; font-weight: bold;
+            color: var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .header-text h1 { font-size: 26px; margin-bottom: 8px; }
+        .header-text p { font-size: 16px; opacity: 0.9; }
+        .contact-info { display: flex; justify-content: center; gap: 20px; margin-top: 15px; flex-wrap: wrap; }
+        .contact-item {
+            display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.1);
+            padding: 8px 15px; border-radius: 50px; backdrop-filter: blur(10px); font-size: 14px;
+        }
+        .main-content { padding: 30px; }
+        .service-selection-section { margin-bottom: 30px; }
+        .section-title {
+            color: var(--primary); font-size: 24px; margin-bottom: 20px; padding-bottom: 10px;
+            border-bottom: 3px solid var(--primary); display: flex; align-items: center; justify-content: space-between;
+        }
+        .section-title i { font-size: 20px; }
+        .title-actions { display: flex; gap: 8px; }
+        .title-btn {
+            background: var(--primary); color: white; border: none; padding: 8px 15px; border-radius: 6px;
+            cursor: pointer; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 5px;
+        }
+        .title-btn:hover { background: var(--primary-dark); }
+        .service-buttons-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; margin-bottom: 25px;
+        }
+        .service-btn {
+            background: white; border: 2px solid #E5E7EB; border-radius: 10px; padding: 20px; text-align: center;
+            cursor: pointer; transition: all 0.3s; display: flex; flex-direction: column; align-items: center;
+            gap: 10px; position: relative;
+        }
+        .service-btn:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .service-btn.active { border-color: var(--primary); background: #F0F9FF; }
+        .service-btn.custom-service { border-color: var(--success); border-style: dashed; }
+        .service-icon { font-size: 30px; color: var(--primary); margin-bottom: 5px; }
+        .service-btn-name { font-size: 16px; font-weight: 600; color: var(--dark); text-align: center; }
+        .service-btn-price { font-size: 18px; font-weight: bold; color: var(--success); }
+        .service-btn-category {
+            font-size: 12px; color: var(--gray); background: #F3F4F6; padding: 3px 10px; border-radius: 10px;
+        }
+        .delete-service-btn {
+            position: absolute; top: 8px; right: 8px; background: var(--danger); color: white; border: none;
+            width: 22px; height: 22px; border-radius: 50%; cursor: pointer; display: none; align-items: center;
+            justify-content: center; font-size: 12px;
+        }
+        .service-btn:hover .delete-service-btn { display: flex; }
+        .quick-search { margin-top: 20px; display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
+        .search-box { position: relative; flex: 1; max-width: 400px; }
+        .search-input {
+            width: 100%; padding: 12px 45px 12px 15px; border: 2px solid #E5E7EB; border-radius: 50px;
+            font-size: 15px; background: white;
+        }
+        .search-input:focus { outline: none; border-color: var(--primary); }
+        .search-icon { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: var(--gray); font-size: 16px; }
+        .category-filter { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+        .filter-btn {
+            padding: 8px 15px; background: #F3F4F6; border: 2px solid #E5E7EB; border-radius: 20px; cursor: pointer;
+            font-size: 13px; font-weight: 500; transition: all 0.3s;
+        }
+        .filter-btn:hover { border-color: var(--primary); background: #E0E7FF; }
+        .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .service-info-section { margin-bottom: 30px; }
+        .service-card {
+            background: white; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); padding: 25px;
+            margin-bottom: 25px; border: 2px solid #E5E7EB; transition: all 0.3s ease;
+        }
+        .service-card:hover { border-color: var(--primary); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        .service-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+        .service-name-container { flex: 1; }
+        .service-name { font-size: 24px; font-weight: bold; color: var(--dark); margin-bottom: 8px; }
+        .service-category {
+            display: inline-block; background: #E0E7FF; color: var(--primary); padding: 5px 15px;
+            border-radius: 20px; font-size: 14px; font-weight: 600;
+        }
+        .service-price-container { text-align: right; }
+        .service-price-label { font-size: 14px; color: var(--gray); margin-bottom: 5px; }
+        .service-price { font-size: 32px; font-weight: bold; color: var(--success); }
+        .service-description {
+            margin: 20px 0; padding: 18px; background: #F9FAFB; border-radius: 10px; border-left: 4px solid var(--secondary);
+        }
+        .description-label { font-weight: 600; color: var(--dark); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .description-text { color: var(--gray); line-height: 1.6; font-size: 15px; }
+        .documents-section { margin-top: 25px; }
+        .documents-list { list-style: none; padding-left: 0; }
+        .document-item {
+            display: flex; align-items: center; gap: 12px; padding: 12px; background: #F9FAFB; border-radius: 8px;
+            margin-bottom: 10px; border-left: 4px solid var(--primary); transition: all 0.3s;
+        }
+        .document-item:hover { background: #F3F4F6; transform: translateX(5px); }
+        .document-item i { color: var(--success); font-size: 16px; }
+        .edit-doc-btn {
+            background: transparent; border: none; color: var(--primary); cursor: pointer; padding: 5px;
+            border-radius: 4px; transition: all 0.3s;
+        }
+        .edit-doc-btn:hover { background: var(--primary); color: white; }
+        .add-document-btn {
+            background: var(--secondary); color: white; border: none; padding: 10px 20px; border-radius: 8px;
+            cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px; font-size: 14px;
+        }
+        .add-document-btn:hover { background: var(--secondary-dark); }
+        
+        /* WhatsApp Section */
+        .whatsapp-section {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); border-radius: 12px; padding: 25px;
+            color: white; margin-top: 30px;
+        }
+        .whatsapp-header { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
+        .whatsapp-header i { font-size: 32px; }
+        .whatsapp-header h3 { font-size: 22px; font-weight: bold; }
+        .whatsapp-message-box {
+            background: rgba(255,255,255,0.1); border-radius: 10px; padding: 18px; margin: 18px 0; backdrop-filter: blur(10px);
+        }
+        .message-preview {
+            font-family: 'Arial', sans-serif; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 8px;
+            margin: 15px 0; white-space: pre-wrap; line-height: 1.6; max-height: 250px; overflow-y: auto; font-size: 14px;
+        }
+        .customer-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .input-group { display: flex; flex-direction: column; }
+        .input-label { font-weight: 600; margin-bottom: 6px; font-size: 13px; }
+        .input-field {
+            padding: 10px; border: 2px solid rgba(255,255,255,0.3); border-radius: 8px;
+            background: rgba(255,255,255,0.1); color: white; font-size: 15px;
+        }
+        .input-field::placeholder { color: rgba(255,255,255,0.7); }
+        .input-field:focus { outline: none; border-color: white; }
+        .whatsapp-btn {
+            background: white; color: #25D366; border: none; padding: 14px 28px; border-radius: 10px;
+            font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 10px;
+            margin: 18px auto 0; transition: all 0.3s; width: 100%; justify-content: center;
+        }
+        .whatsapp-btn:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .whatsapp-test-btn {
+            background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 8px 15px;
+            border-radius: 6px; font-size: 13px; cursor: pointer; margin-top: 10px; display: flex; align-items: center; gap: 5px;
+        }
+        .whatsapp-test-btn:hover { background: rgba(255,255,255,0.3); }
+        
+        /* Email Section */
+        .email-section {
+            background: linear-gradient(135deg, var(--email) 0%, var(--email-dark) 100%); 
+            border-radius: 12px; padding: 25px; color: white; margin-top: 30px;
+        }
+        .email-header { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
+        .email-header i { font-size: 32px; }
+        .email-header h3 { font-size: 22px; font-weight: bold; }
+        .email-message-box {
+            background: rgba(255,255,255,0.1); border-radius: 10px; padding: 18px; margin: 18px 0; 
+            backdrop-filter: blur(10px);
+        }
+        .email-btn {
+            background: white; color: var(--email); border: none; padding: 14px 28px; border-radius: 10px;
+            font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 10px;
+            margin: 18px auto 0; transition: all 0.3s; width: 100%; justify-content: center;
+        }
+        .email-btn:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .email-test-btn {
+            background: rgba(255,255,255,0.2); color: white; border: 1px solid white; padding: 8px 15px;
+            border-radius: 6px; font-size: 13px; cursor: pointer; margin-top: 10px; display: flex; align-items: center; gap: 5px;
+        }
+        .email-test-btn:hover { background: rgba(255,255,255,0.3); }
+        .email-options {
+            display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;
+        }
+        .email-option-btn {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 8px;
+            padding: 10px 15px; color: white; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 5px;
+        }
+        .email-option-btn:hover { background: rgba(255,255,255,0.2); }
+        .email-option-btn.active { background: rgba(255,255,255,0.3); border-color: white; }
+        
+        .action-buttons {
+            display: flex; gap: 12px; justify-content: center; margin-top: 25px; padding: 20px; border-top: 1px solid #E5E7EB;
+        }
+        .action-btn {
+            padding: 12px 22px; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer;
+            display: flex; align-items: center; gap: 8px; transition: all 0.3s;
+        }
+        .btn-print { background: var(--primary); color: white; }
+        .btn-print:hover { background: var(--primary-dark); }
+        .btn-save { background: var(--success); color: white; }
+        .btn-save:hover { background: #047857; }
+        .btn-clear { background: var(--danger); color: white; }
+        .btn-clear:hover { background: #B91C1C; }
+        .btn-reset { background: var(--secondary); color: white; }
+        .btn-reset:hover { background: var(--secondary-dark); }
+        .customize-btn {
+            background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 8px;
+            cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: all 0.3s; font-size: 14px;
+        }
+        .customize-btn:hover { background: var(--primary-dark); transform: translateY(-2px); }
+        .footer { text-align: center; padding: 20px; background: var(--dark); color: white; margin-top: 30px; }
+        .footer p { margin: 5px 0; font-size: 14px; }
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: white; border-radius: 12px; padding: 25px; max-width: 500px; width: 90%;
+            max-height: 80vh; overflow-y: auto;
+        }
+        .modal-header { font-size: 20px; font-weight: bold; color: var(--dark); margin-bottom: 15px; padding-bottom: 12px; border-bottom: 2px solid var(--primary); }
+        .modal-input { width: 100%; padding: 10px; border: 2px solid #E5E7EB; border-radius: 8px; font-size: 15px; margin-bottom: 12px; }
+        .modal-input:focus { outline: none; border-color: var(--primary); }
+        .modal-textarea { width: 100%; padding: 10px; border: 2px solid #E5E7EB; border-radius: 8px; font-size: 15px; margin-bottom: 12px; min-height: 80px; resize: vertical; font-family: 'Arial', sans-serif; }
+        .modal-buttons { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-add { flex: 1; padding: 10px; background: var(--success); color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; }
+        .btn-add:hover { background: #047857; }
+        .btn-cancel { flex: 1; padding: 10px; background: var(--gray); color: white; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; }
+        .btn-cancel:hover { background: #4B5563; }
+        .service-counter { text-align: center; margin: 15px 0; color: var(--gray); font-size: 13px; }
+        .service-counter span { font-weight: bold; color: var(--primary); }
+        .new-service-btn {
+            background: linear-gradient(135deg, var(--success) 0%, #047857 100%); color: white; border: 2px dashed white;
+            border-radius: 10px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 140px;
+        }
+        .new-service-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .new-service-icon { font-size: 40px; margin-bottom: 8px; }
+        .new-service-text { font-size: 16px; font-weight: 600; }
+        .status-options {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-top: 15px; margin-bottom: 15px;
+        }
+        .status-option-btn {
+            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 8px;
+            padding: 10px; color: white; cursor: pointer; text-align: center; transition: all 0.3s;
+        }
+        .status-option-btn:hover { background: rgba(255, 255, 255, 0.2); transform: translateY(-2px); }
+        .status-option-btn.active { background: rgba(255, 255, 255, 0.3); border-color: white; }
+        .attachment-section {
+            margin-top: 15px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px;
+        }
+        .attachment-list { margin-top: 10px; }
+        .attachment-item {
+            display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.1);
+            padding: 10px; border-radius: 6px; margin-bottom: 8px;
+        }
+        .attachment-info { display: flex; align-items: center; gap: 10px; }
+        .attachment-name { font-weight: 500; }
+        .attachment-actions { display: flex; gap: 5px; }
+        .attachment-btn {
+            background: rgba(255,255,255,0.2); border: none; color: white; padding: 5px 10px; border-radius: 4px;
+            cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 3px;
+        }
+        .attachment-btn:hover { background: rgba(255,255,255,0.3); }
+        .upload-area {
+            border: 2px dashed rgba(255,255,255,0.3); border-radius: 8px; padding: 20px; text-align: center;
+            margin-top: 10px; cursor: pointer; transition: all 0.3s;
+        }
+        .upload-area:hover { border-color: white; background: rgba(255,255,255,0.05); }
+        .upload-area i { font-size: 24px; margin-bottom: 10px; }
+        .upload-area p { font-size: 14px; margin-bottom: 5px; }
+        .file-input { display: none; }
+        .cloud-storage-options {
+            display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;
+        }
+        .cloud-btn {
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 6px;
+            padding: 8px 12px; color: white; cursor: pointer; font-size: 12px; display: flex; align-items: center; gap: 5px;
+        }
+        .cloud-btn:hover { background: rgba(255,255,255,0.2); }
+        @media (max-width: 768px) {
+            .header { padding: 20px; }
+            .logo-container { flex-direction: column; text-align: center; }
+            .service-header { flex-direction: column; text-align: center; }
+            .service-price-container { text-align: center; }
+            .customer-inputs { grid-template-columns: 1fr; }
+            .contact-info { flex-direction: column; align-items: center; gap: 10px; }
+            .action-buttons { flex-direction: column; }
+            .main-content { padding: 20px; }
+            .service-price { font-size: 28px; }
+            .service-name { font-size: 22px; }
+            .section-title { font-size: 20px; flex-direction: column; align-items: flex-start; gap: 10px; }
+            .service-buttons-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+            .quick-search { flex-direction: column; align-items: stretch; }
+            .search-box { max-width: 100%; }
+            .whatsapp-btn, .email-btn { padding: 12px 20px; font-size: 15px; }
+            .status-options { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+            .cloud-storage-options, .email-options { flex-direction: column; }
+        }
+        @media (max-width: 480px) {
+            .header-text h1 { font-size: 22px; }
+            .header-text p { font-size: 14px; }
+            .action-btn { padding: 10px 18px; font-size: 14px; }
+            .service-buttons-grid { grid-template-columns: 1fr; }
+            .modal-content { padding: 20px; }
+            .status-options { grid-template-columns: 1fr; }
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .service-card { animation: fadeIn 0.5s ease-out; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary-dark); }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo">D</div>
+                <div class="header-text">
+                    <h1>தாஸ் பொது சேவை மையம்</h1>
+                    <p>Thoothukudi-1 - சேவை விபரங்கள் & தேவையான ஆவணங்கள்</p>
+                </div>
+            </div>
+            <div class="contact-info">
+                <div class="contact-item"><i class="fas fa-phone"></i><span>88 70 23 23 32</span></div>
+                <div class="contact-item"><i class="fas fa-phone"></i><span>98 43 23 23 24</span></div>
+                <div class="contact-item"><i class="fab fa-whatsapp"></i><span>WhatsApp: 9843232324</span></div>
+                <div class="contact-item"><i class="fas fa-envelope"></i><span>Email: dhasscsc@gmail.com</span></div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="service-selection-section">
+                <h2 class="section-title">
+                    <div><i class="fas fa-list"></i> சேவைகளை தேர்ந்தெடுக்கவும்</div>
+                    <div class="title-actions">
+                        <button class="title-btn" onclick="openAddServiceModal()"><i class="fas fa-plus"></i> புதிய சேவை</button>
+                        <button class="title-btn" onclick="openEditServiceModal()" style="background: var(--secondary);"><i class="fas fa-edit"></i> சேவை திருத்து</button>
+                    </div>
+                </h2>
+                <div class="service-counter">
+                    மொத்த சேவைகள்: <span id="totalServicesCount">0</span> | 
+                    பயனர் சேர்க்கப்பட்டவை: <span id="customServicesCount">0</span> | 
+                    ரெடிமேட் சேவைகள்: <span id="predefinedServicesCount">10</span>
+                </div>
+                <div class="quick-search">
+                    <div class="search-box">
+                        <input type="text" class="search-input" id="serviceSearch" placeholder="🔍 சேவையை தேடவும்...">
+                        <div class="search-icon"><i class="fas fa-search"></i></div>
+                    </div>
+                    <div class="category-filter">
+                        <button class="filter-btn active" onclick="filterServices('all')">அனைத்தும்</button>
+                        <button class="filter-btn" onclick="filterServices('த அரசு சேவை')">த அரசு சேவை</button>
+                        <button class="filter-btn" onclick="filterServices('ம அரசு சேவை')">ம அரசு சேவை</button>
+                        <button class="filter-btn" onclick="filterServices('இ சேவை')">இ சேவை</button>
+                        <button class="filter-btn" onclick="filterServices('பொது சேவை')">பொது சேவை</button>
+                        <button class="filter-btn" onclick="filterServices('இதர சேவை')">இதர சேவை</button>
+                        <button class="filter-btn" onclick="filterServices('சிறப்பு சேவைகள்')">சிறப்பு சேவைகள்</button>
+                        <button class="filter-btn" onclick="filterServices('custom')">எனது சேவைகள்</button>
+                    </div>
+                </div>
+                <div class="service-buttons-grid" id="serviceButtonsGrid"></div>
+                <div class="service-buttons-grid">
+                    <div class="new-service-btn" onclick="openAddServiceModal()">
+                        <div class="new-service-icon"><i class="fas fa-plus-circle"></i></div>
+                        <div class="new-service-text">+ புதிய சேவை சேர்க்க</div>
+                        <div style="font-size: 13px; opacity: 0.8;">கிளிக் செய்யவும்</div>
+                    </div>
+                </div>
+            </div>
+            <div class="service-info-section">
+                <h2 class="section-title"><i class="fas fa-info-circle"></i> சேவை விபரங்கள்</h2>
+                <div class="service-card">
+                    <div class="service-header">
+                        <div class="service-name-container">
+                            <div class="service-name" id="serviceNameDisplay">சேவையை தேர்ந்தெடுக்கவும்</div>
+                            <div class="service-category" id="serviceCategoryDisplay">சேவை வகை</div>
+                        </div>
+                        <div class="service-price-container">
+                            <div class="service-price-label">சேவை கட்டணம்</div>
+                            <div class="service-price" id="servicePriceDisplay">₹0.00</div>
+                        </div>
+                    </div>
+                    <div class="service-description">
+                        <div class="description-label"><i class="fas fa-file-alt"></i> சேவை விளக்கம்</div>
+                        <div class="description-text" id="serviceDescriptionDisplay">மேலே உள்ள பட்டன்களில் இருந்து ஒரு சேவையை தேர்ந்தெடுக்கவும்</div>
+                    </div>
+                    <div class="documents-section">
+                        <label class="description-label"><i class="fas fa-file-alt"></i> தேவையான ஆவணங்கள்</label>
+                        <ul class="documents-list" id="documentsList">
+                            <li class="document-item"><i class="fas fa-check-circle"></i><span>சேவையை தேர்ந்தெடுக்கவும்</span></li>
+                        </ul>
+                        <div style="display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap;">
+                            <button type="button" class="add-document-btn" onclick="openAddDocumentModal()"><i class="fas fa-plus"></i> புதிய ஆவணம்</button>
+                            <button type="button" class="customize-btn" onclick="openEditDocumentModal()"><i class="fas fa-edit"></i> ஆவணங்கள் திருத்து</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- WhatsApp Message with Attachments Section -->
+            <div class="whatsapp-section">
+                <div class="whatsapp-header">
+                    <i class="fab fa-whatsapp"></i>
+                    <h3>வாடிக்கையாளருக்கு வாட்சப்பில் அனுப்புக</h3>
+                </div>
+                <div class="whatsapp-message-box">
+                    <div class="customer-inputs">
+                        <div class="input-group">
+                            <label class="input-label">வாடிக்கையாளர் பெயர் *</label>
+                            <input type="text" id="customerName" class="input-field" placeholder="வாடிக்கையாளர் பெயர்">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">வாடிக்கையாளர் தொலைபேசி எண் *</label>
+                            <input type="tel" id="customerPhone" class="input-field" placeholder="9843232324">
+                        </div>
+                    </div>
+                    
+                    <!-- ஆவண இணைப்புகள் பகுதி -->
+                    <div class="attachment-section">
+                        <label class="input-label"><i class="fas fa-paperclip"></i> ஆவணங்களை இணைக்கவும் (விருப்பத்தேர்வு)</label>
+                        <div class="attachment-list" id="attachmentList"></div>
+                        <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>ஆவணங்களை இங்கே இழுத்து விடவும் அல்லது கிளிக் செய்யவும்</p>
+                            <p style="font-size: 12px; opacity: 0.8;">PDF, Word, Excel, Image, Text files (அதிகபட்சம் 5MB)</p>
+                            <input type="file" id="fileInput" class="file-input" multiple onchange="handleFileUpload(event)">
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <label class="input-label">க்ளவுட் ஸ்டோரேஜ் இணைப்புகள்:</label>
+                            <div class="cloud-storage-options">
+                                <button class="cloud-btn" onclick="addCloudLink('google-drive')"><i class="fab fa-google-drive"></i> Google Drive</button>
+                                <button class="cloud-btn" onclick="addCloudLink('dropbox')"><i class="fab fa-dropbox"></i> Dropbox</button>
+                                <button class="cloud-btn" onclick="addCloudLink('onedrive')"><i class="fab fa-microsoft"></i> OneDrive</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="whatsapp-test-btn" onclick="testWhatsAppMessage()"><i class="fas fa-vial"></i> WhatsApp செய்தி சோதனை</button>
+                    <div style="margin-top: 15px;">
+                        <label class="input-label">செய்தி முன்னோட்டம்:</label>
+                        <div class="message-preview" id="messagePreview">வணக்கம்!
+
+தாஸ் பொது சேவை மையத்திற்கு நல்வரவு!
+
+சேவையை தேர்ந்தெடுக்கவும்...</div>
+                    </div>
+                    <button type="button" class="whatsapp-btn" onclick="sendWhatsAppMessage()"><i class="fab fa-whatsapp"></i> வாட்சப்பில் அனுப்பு</button>
+                </div>
+            </div>
+            
+            <!-- Email Section -->
+            <div class="email-section">
+                <div class="email-header">
+                    <i class="fas fa-envelope"></i>
+                    <h3>வாடிக்கையாளருக்கு ஈமெயிலில் அனுப்புக</h3>
+                </div>
+                <div class="email-message-box">
+                    <div class="customer-inputs">
+                        <div class="input-group">
+                            <label class="input-label">வாடிக்கையாளர் பெயர் *</label>
+                            <input type="text" id="emailCustomerName" class="input-field" placeholder="வாடிக்கையாளர் பெயர்">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">வாடிக்கையாளர் ஈமெயில் *</label>
+                            <input type="email" id="emailCustomerEmail" class="input-field" placeholder="customer@gmail.com">
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 15px;">
+                        <label class="input-label">உங்கள் ஈமெயில் (From):</label>
+                        <input type="email" id="senderEmail" class="input-field" value="dhasscsc@gmail.com" readonly>
+                    </div>
+                    
+                    <div class="email-options">
+                        <button class="email-option-btn active" onclick="setEmailType('service_info')">
+                            <i class="fas fa-info-circle"></i> சேவை விபரங்கள்
+                        </button>
+                        <button class="email-option-btn" onclick="setEmailType('documents_list')">
+                            <i class="fas fa-file-alt"></i> ஆவணப் பட்டியல்
+                        </button>
+                        <button class="email-option-btn" onclick="setEmailType('quotation')">
+                            <i class="fas fa-file-invoice"></i> விலைப்பட்டியல்
+                        </button>
+                        <button class="email-option-btn" onclick="setEmailType('reminder')">
+                            <i class="fas fa-bell"></i> நினைவூட்டல்
+                        </button>
+                    </div>
+                    
+                    <button class="email-test-btn" onclick="testEmailMessage()"><i class="fas fa-vial"></i> ஈமெயில் செய்தி சோதனை</button>
+                    <div style="margin-top: 15px;">
+                        <label class="input-label">ஈமெயில் முன்னோட்டம்:</label>
+                        <div class="message-preview" id="emailMessagePreview">வணக்கம் [பெயர்]!
+
+தாஸ் பொது சேவை மையத்திற்கு நல்வரவு!
+
+சேவையை தேர்ந்தெடுக்கவும்...</div>
+                    </div>
+                    <button type="button" class="email-btn" onclick="sendEmail()">
+                        <i class="fas fa-paper-plane"></i> ஈமெயில் அனுப்பு
+                    </button>
+                </div>
+            </div>
+            
+            <!-- நன்றி அறிவிப்பு பகுதி -->
+            <div class="whatsapp-section" style="background: linear-gradient(135deg, #8E44AD 0%, #6C3483 100%); margin-top: 30px;">
+                <div class="whatsapp-header">
+                    <i class="fas fa-hands-helping"></i>
+                    <h3>நேரில் வந்த வாடிக்கையாளருக்கு நன்றி அறிவிப்பு</h3>
+                </div>
+                <div class="whatsapp-message-box">
+                    <div class="customer-inputs">
+                        <div class="input-group">
+                            <label class="input-label">வாடிக்கையாளர் பெயர் *</label>
+                            <input type="text" id="thankYouCustomerName" class="input-field" placeholder="வாடிக்கையாளர் பெயர்">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">வாடிக்கையாளர் தொலைபேசி எண் *</label>
+                            <input type="tel" id="thankYouCustomerPhone" class="input-field" placeholder="9843232324">
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <label class="input-label">சேவைகளின் பெயர்கள் (காற்புள்ளியால் பிரிக்கவும்)</label>
+                        <input type="text" id="thankYouServices" class="input-field" placeholder="எ.கா: ஆதார் கார்டு, பாஸ்போர்ட் போட்டோ, பான் கார்டு">
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <label class="input-label">குறிப்பு எண்கள் (விரும்பினால்)</label>
+                        <input type="text" id="thankYouRefNumbers" class="input-field" placeholder="எ.கா: REF001, REF002">
+                    </div>
+                    <button class="whatsapp-test-btn" onclick="testThankYouMessage()"><i class="fas fa-vial"></i> நன்றி செய்தி சோதனை</button>
+                    <div style="margin-top: 15px;">
+                        <label class="input-label">நன்றி செய்தி முன்னோட்டம்:</label>
+                        <div class="message-preview" id="thankYouMessagePreview">வணக்கம் [பெயர்]!
+
+எங்கள் தாஸ் பொதுசேவை மையத்தை தேர்வு செய்து, வருகை புரிந்தமைக்கு, மிகவும் நன்றி.
+
+சேவைகள்: [சேவைகள்]
+குறிப்பு எண்கள்: [குறிப்பு எண்கள்]
+
+இந்த நாள் இனிதாக அமைய வாழ்த்துகிறோம்.
+
+நன்றி!
+தாஸ் பொது சேவை மையம்
+தூத்துக்குடி-1</div>
+                    </div>
+                    <button type="button" class="whatsapp-btn" onclick="sendThankYouMessage()" style="background: #9B59B6; color: white;"><i class="fab fa-whatsapp"></i> நன்றி செய்தி அனுப்பு</button>
+                </div>
+            </div>
+            
+            <!-- சேவை நிலை மெசேஜ்கள் பகுதி -->
+            <div class="whatsapp-section" style="background: linear-gradient(135deg, #3498DB 0%, #2980B9 100%); margin-top: 30px;">
+                <div class="whatsapp-header">
+                    <i class="fas fa-tasks"></i>
+                    <h3>சேவை நிலை WhatsApp செய்திகள்</h3>
+                </div>
+                <div class="whatsapp-message-box">
+                    <div class="customer-inputs">
+                        <div class="input-group">
+                            <label class="input-label">வாடிக்கையாளர் பெயர் *</label>
+                            <input type="text" id="statusCustomerName" class="input-field" placeholder="வாடிக்கையாளர் பெயர்">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">வாடிக்கையாளர் தொலைபேசி எண் *</label>
+                            <input type="tel" id="statusCustomerPhone" class="input-field" placeholder="9843232324">
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 15px;">
+                        <label class="input-label">சேவை/கோரிக்கை விபரம் *</label>
+                        <input type="text" id="statusService" class="input-field" placeholder="எ.கா: பாஸ்போர்ட் புகைப்படம், ஆதார் கார்டு">
+                    </div>
+                    
+                    <div style="margin-top: 15px;">
+                        <label class="input-label">குறிப்பு எண்/ரெஃபரன்ஸ் எண்</label>
+                        <input type="text" id="statusRefNumber" class="input-field" placeholder="REF001, PS-2024-001">
+                    </div>
+                    
+                    <div style="margin-top: 15px;">
+                        <label class="input-label">குறிப்பு (விரும்பினால்)</label>
+                        <input type="text" id="statusNote" class="input-field" placeholder="மேலதிக தகவல்கள்">
+                    </div>
+                    
+                    <!-- ஆவண இணைப்புகள் பகுதி (சேவை நிலை) -->
+                    <div class="attachment-section">
+                        <label class="input-label"><i class="fas fa-paperclip"></i> ஆவணங்களை இணைக்கவும் (விருப்பத்தேர்வு)</label>
+                        <div class="attachment-list" id="statusAttachmentList"></div>
+                        <div class="upload-area" onclick="document.getElementById('statusFileInput').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>ஆவணங்களை இங்கே இழுத்து விடவும் அல்லது கிளிக் செய்யவும்</p>
+                            <p style="font-size: 12px; opacity: 0.8;">PDF, Word, Excel, Image files</p>
+                            <input type="file" id="statusFileInput" class="file-input" multiple onchange="handleStatusFileUpload(event)">
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 15px;">
+                        <label class="input-label">சேவை நிலை தேர்வு *</label>
+                        <select id="statusType" class="input-field" onchange="updateStatusMessage()">
+                            <option value="welcome">வரவேற்பு மெசேஜ்</option>
+                            <option value="received">கோரிக்கை பெறப்பட்டது</option>
+                            <option value="processing">செயலில் உள்ளது</option>
+                            <option value="reference">குறிப்பு எண் மெசேஜ்</option>
+                            <option value="completed">நிறைவடைந்தது</option>
+                            <option value="payment_request">கட்டணம் செலுத்து</option>
+                            <option value="payment_reminder">கட்டணம் நினைவூட்டல்</option>
+                            <option value="ready">சேவை தயார்</option>
+                            <option value="followup">பின்தொடர்தல்</option>
+                        </select>
+                    </div>
+                    
+                    <div class="status-options">
+                        <div class="status-option-btn" onclick="setStatusType('welcome')">👋 வரவேற்பு</div>
+                        <div class="status-option-btn" onclick="setStatusType('received')">✅ பெறப்பட்டது</div>
+                        <div class="status-option-btn" onclick="setStatusType('processing')">⚙️ செயலில்</div>
+                        <div class="status-option-btn" onclick="setStatusType('reference')">📄 குறிப்பு எண்</div>
+                        <div class="status-option-btn" onclick="setStatusType('completed')">🎉 நிறைவு</div>
+                        <div class="status-option-btn" onclick="setStatusType('payment_request')">💰 கட்டணம்</div>
+                        <div class="status-option-btn" onclick="setStatusType('payment_reminder')">⏰ நினைவூட்டல்</div>
+                        <div class="status-option-btn" onclick="setStatusType('ready')">📦 தயார்</div>
+                        <div class="status-option-btn" onclick="setStatusType('followup')">📞 பின்தொடர்தல்</div>
+                    </div>
+                    
+                    <button class="whatsapp-test-btn" onclick="testStatusMessage()"><i class="fas fa-vial"></i> நிலை செய்தி சோதனை</button>
+                    
+                    <div style="margin-top: 15px;">
+                        <label class="input-label">செய்தி முன்னோட்டம்:</label>
+                        <div class="message-preview" id="statusMessagePreview">
+                            வணக்கம் [பெயர்]!
+
+தாஸ் பொது சேவை மையத்தில் உங்கள் [சேவை] கோரிக்கை பெறப்பட்டது.
+
+நன்றி!
+தாஸ் பொது சேவை மையம்
+தூத்துக்குடி-1
+                        </div>
+                    </div>
+                    
+                    <button type="button" class="whatsapp-btn" onclick="sendStatusMessage()" style="background: #3498DB; color: white;">
+                        <i class="fab fa-whatsapp"></i> நிலை செய்தி அனுப்பு
+                    </button>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button type="button" class="action-btn btn-print" onclick="printPage()"><i class="fas fa-print"></i> அச்சிடு</button>
+                <button type="button" class="action-btn btn-save" onclick="saveServiceInfo()"><i class="fas fa-save"></i> சேமி</button>
+                <button type="button" class="action-btn btn-reset" onclick="resetPredefinedServices()"><i class="fas fa-undo"></i> ரெடிமேட் மீட்டமை</button>
+                <button type="button" class="action-btn btn-clear" onclick="clearAll()"><i class="fas fa-trash"></i> அழி</button>
+            </div>
+        </div>
+        <div class="footer">
+            <p>நன்றி! மீண்டும் வருக!</p>
+            <p>தாஸ் பொது சேவை மையம், தூத்துக்குடி-1</p>
+            <p style="font-size: 13px; margin-top: 8px; opacity: 0.8;">© 2024 அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை</p>
+        </div>
+    </div>
+    
+    <!-- Modals -->
+    <div class="modal" id="addDocumentModal">
+        <div class="modal-content">
+            <div class="modal-header">புதிய ஆவணம் சேர்க்க</div>
+            <input type="text" id="newDocument" class="modal-input" placeholder="ஆவணத்தின் பெயர் (எ.கா: வாக்குச்சீட்டு)" autofocus>
+            <div class="modal-buttons">
+                <button type="button" class="btn-add" onclick="addDocument()">சேர்க்க</button>
+                <button type="button" class="btn-cancel" onclick="closeAddDocumentModal()">ரத்து</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="editServiceModal">
+        <div class="modal-content">
+            <div class="modal-header">சேவையை திருத்து</div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px;">சேவையின் பெயர் *</label>
+                <input type="text" id="editServiceName" class="modal-input" placeholder="சேவை பெயர்">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px;">சேவை வகை *</label>
+                <select id="editServiceCategory" class="modal-input">
+                    <option value="த அரசு சேவை">த அரசு சேவை</option>
+                    <option value="ம அரசு சேவை">ம அரசு சேவை</option>
+                    <option value="இ சேவை">இ சேவை</option>
+                    <option value="பொது சேவை">பொது சேவை</option>
+                    <option value="இதர சேவை">இதர சேவை</option>
+                    <option value="சிறப்பு சேவைகள்">சிறப்பு சேவைகள்</option>
+                    <option value="வாகனம்">வாகனம்</option>
+                    <option value="கல்வி">கல்வி</option>
+                    <option value="மருத்துவம்">மருத்துவம்</option>
+                    <option value="பிற">பிற</option>
+                </select>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px;">சேவை கட்டணம் (₹) *</label>
+                <input type="number" id="editServicePrice" class="modal-input" placeholder="0.00" min="0" step="0.01">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px;">சேவை விளக்கம்</label>
+                <textarea id="editServiceDescription" class="modal-textarea" placeholder="சேவை பற்றிய விபரங்கள்..."></textarea>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px;">தேவையான ஆவணங்கள் (ஒவ்வொரு வரியிலும் ஒன்று)</label>
+                <textarea id="editServiceDocuments" class="modal-textarea" placeholder="ஆதார் கார்டு
+புகைப்படம்
+முகவரி சான்று"></textarea>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px;">ஐகான்</label>
+                <select id="editServiceIcon" class="modal-input">
+                    <option value="fas fa-id-card">ஆதார் கார்டு</option><option value="fas fa-credit-card">பான் கார்டு</option>
+                    <option value="fas fa-camera">புகைப்படம்</option><option value="fas fa-passport">பாஸ்போர்ட்</option>
+                    <option value="fas fa-car">வாகனம்</option><option value="fas fa-graduation-cap">கல்வி</option>
+                    <option value="fas fa-file-contract">ஆவணம்</option><option value="fas fa-stamp">அட்டஸ்டேஷன்</option>
+                    <option value="fas fa-file-signature">கையொப்பம்</option><option value="fas fa-print">அச்சிடுதல்</option>
+                    <option value="fas fa-certificate">சான்றிதழ்</option><option value="fas fa-home">முகவரி</option>
+                    <option value="fas fa-briefcase">வேலை</option><option value="fas fa-plane">விசா</option>
+                    <option value="fas fa-heartbeat">மருத்துவம்</option><option value="fas fa-wallet">பணம்</option>
+                    <option value="fas fa-mobile-alt">மொபைல்</option><option value="fas fa-laptop">கம்ப்யூட்டர்</option>
+                </select>
+            </div>
+            <div class="modal-buttons">
+                <button type="button" class="btn-add" onclick="saveEditedService()">சேமி</button>
+                <button type="button" class="btn-cancel" onclick="closeEditServiceModal()">ரத்து</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="addServiceModal">
+        <div class="modal-content">
+            <div class="modal-header">புதிய சேவை சேர்க்க</div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px;">சேவையின் பெயர் *</label>
+                <input type="text" id="newServiceName" class="modal-input" placeholder="எ.கா: மகிழுந்து உரிமம் விண்ணப்பம்" autofocus>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px;">சேவை வகை *</label>
+                <select id="newServiceCategory" class="modal-input">
+                    <option value="த அரசு சேவை">த அரசு சேவை</option>
+                    <option value="ம அரசு சேவை">ம அரசு சேவை</option>
+                    <option value="இ சேவை">இ சேவை</option>
+                    <option value="பொது சேவை">பொது சேவை</option>
+                    <option value="இதர சேவை">இதர சேவை</option>
+                    <option value="சிறப்பு சேவைகள்">சிறப்பு சேவைகள்</option>
+                    <option value="வாகனம்">வாகனம்</option>
+                    <option value="கல்வி">கல்வி</option>
+                    <option value="மருத்துவம்">மருத்துவம்</option>
+                    <option value="பிற">பிற</option>
+                </select>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px;">சேவை கட்டணம் (₹) *</label>
+                <input type="number" id="newServicePrice" class="modal-input" placeholder="0.00" min="0" step="0.01">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px;">சேவை விளக்கம்</label>
+                <textarea id="newServiceDescription" class="modal-textarea" placeholder="சேவை பற்றிய விபரங்கள்..."></textarea>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px;">தேவையான ஆவணங்கள் (ஒவ்வொரு வரியிலும் ஒன்று)</label>
+                <textarea id="newServiceDocuments" class="modal-textarea" placeholder="ஆதார் கார்டு
+புகைப்படம்
+முகவரி சான்று"></textarea>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px;">ஐகான்</label>
+                <select id="newServiceIcon" class="modal-input">
+                    <option value="fas fa-id-card">ஆதார் கார்டு</option><option value="fas fa-credit-card">பான் கார்டு</option>
+                    <option value="fas fa-camera">புகைப்படம்</option><option value="fas fa-passport">பாஸ்போர்ட்</option>
+                    <option value="fas fa-car">வாகனம்</option><option value="fas fa-graduation-cap">கல்வி</option>
+                    <option value="fas fa-file-contract">ஆவணம்</option><option value="fas fa-stamp">அட்டஸ்டேஷன்</option>
+                    <option value="fas fa-file-signature">கையொப்பம்</option><option value="fas fa-print">அச்சிடுதல்</option>
+                    <option value="fas fa-certificate">சான்றிதழ்</option><option value="fas fa-home">முகவரி</option>
+                    <option value="fas fa-briefcase">வேலை</option><option value="fas fa-plane">விசா</option>
+                    <option value="fas fa-heartbeat">மருத்துவம்</option><option value="fas fa-wallet">பணம்</option>
+                    <option value="fas fa-mobile-alt">மொபைல்</option><option value="fas fa-laptop">கம்ப்யூட்டர்</option>
+                </select>
+            </div>
+            <div class="modal-buttons">
+                <button type="button" class="btn-add" onclick="saveNewService()">சேவையை சேர்க்க</button>
+                <button type="button" class="btn-cancel" onclick="closeAddServiceModal()">ரத்து</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Cloud Link Modal -->
+    <div class="modal" id="cloudLinkModal">
+        <div class="modal-content">
+            <div class="modal-header">க்ளவுட் ஸ்டோரேஜ் இணைப்பு சேர்க்க</div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px;">இணைப்பு பெயர் *</label>
+                    <input type="text" id="cloudLinkName" class="modal-input" placeholder="எ.கா: பாஸ்போர்ட் படிவம்" autofocus>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px;">இணைப்பு URL *</label>
+                <input type="url" id="cloudLinkUrl" class="modal-input" placeholder="https://drive.google.com/...">
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: 600; margin-bottom: 6px;">வகை</label>
+                <select id="cloudLinkType" class="modal-input">
+                    <option value="google-drive">Google Drive</option>
+                    <option value="dropbox">Dropbox</option>
+                    <option value="onedrive">OneDrive</option>
+                    <option value="other">மற்றவை</option>
+                </select>
+            </div>
+            <div class="modal-buttons">
+                <button type="button" class="btn-add" onclick="addCloudLinkFromModal()">சேர்க்க</button>
+                <button type="button" class="btn-cancel" onclick="closeCloudLinkModal()">ரத்து</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const originalPredefinedServices = [
+            { id: 1, name: "ஆதார் கார்டு பிரிண்ட்", category: "த அரசு சேவை", price: 10.00, description: "ஆதார் கார்டை அச்சிடுதல் மற்றும் லேமினேஷன்", icon: "fas fa-id-card", documents: ["ஆதார் கார்டு (அசல் + நகல்)", "மொபைல் எண் (ஆதார் பதிவு செய்யப்பட்டது)", "புகைப்படம் (பாஸ்போர்ட் அளவு)"], isPredefined: true },
+            { id: 2, name: "பான் கார்டு விண்ணப்பம்", category: "த அரசு சேவை", price: 120.00, description: "புதிய பான் கார்டிற்கான விண்ணப்பம் மற்றும் ஆவண தயாரிப்பு", icon: "fas fa-credit-card", documents: ["ஆதார் கார்டு", "புகைப்படம் 2 (பாஸ்போர்ட் அளவு)", "கையொப்பம்", "முகவரி சான்று"], isPredefined: true },
+            { id: 3, name: "பாஸ்போர்ட் போட்டோ", category: "இ சேவை", price: 50.00, description: "பாஸ்போர்ட் அளவு புகைப்படம் எடுத்தல் மற்றும் அச்சிடுதல்", icon: "fas fa-camera", documents: ["எந்த ஆவணமும் தேவையில்லை", "கருப்பு/நீல ஷர்ட் அணியவும்"], isPredefined: true },
+            { id: 4, name: "வோட்டர் ஐடி கார்டு", category: "த அரசு சேவை", price: 25.00, description: "வோட்டர் ஐடி கார்டு விண்ணப்பம் மற்றும் ஆவண தயாரிப்பு", icon: "fas fa-vote-yea", documents: ["ஆதார் கார்டு", "புகைப்படம்", "வயது சான்று", "முகவரி சான்று"], isPredefined: true },
+            { id: 5, name: "ரேஷன் கார்டு விண்ணப்பம்", category: "த அரசு சேவை", price: 80.00, description: "புதிய ரேஷன் கார்டிற்கான விண்ணப்பம்", icon: "fas fa-shopping-basket", documents: ["ஆதார் கார்டு", "வருமான சான்று", "முகவரி சான்று", "புகைப்படம்"], isPredefined: true },
+            { id: 6, name: "குடும்பச் சான்று", category: "பொது சேவை", price: 40.00, description: "குடும்பச் சான்று தயாரித்தல் மற்றும் அட்டஸ்டேஷன்", icon: "fas fa-home", documents: ["ஆதார் கார்டு (அனைத்து உறுப்பினர்கள்)", "வாக்காளர் ஐடி கார்டு", "முகவரி சான்று"], isPredefined: true },
+            { id: 7, name: "வருமான சான்று", category: "பொது சேவை", price: 60.00, description: "வருமான சான்று தயாரித்தல் மற்றும் சான்றிதழ்", icon: "fas fa-file-invoice-dollar", documents: ["ஆதார் கார்டு", "பான் கார்டு", "வரி ரசீது", "வேலை சான்று"], isPredefined: true },
+            { id: 8, name: "டிப்ளோமா அட்டஸ்டேஷன்", category: "பொது சேவை", price: 100.00, description: "கல்வி சான்றுகள் அட்டஸ்டேஷன்", icon: "fas fa-graduation-cap", documents: ["டிப்ளோமா/டிகிரி அசல்", "மார்க் ஷீட் அசல்", "ஆதார் கார்டு", "புகைப்படம்"], isPredefined: true },
+            { id: 9, name: "பாஸ்போர்ட் விண்ணப்பம்", category: "இதர சேவை", price: 300.00, description: "புதிய பாஸ்போர்டிற்கான விண்ணப்பம் மற்றும் ஆவண தயாரிப்பு", icon: "fas fa-passport", documents: ["ஆதார் கார்டு", "பான் கார்டு", "பிறப்பு சான்று", "வாக்காளர் ஐடி", "புகைப்படம் 4"], isPredefined: true },
+            { id: 10, name: "விசா ஆவணங்கள்", category: "சிறப்பு சேவைகள்", price: 500.00, description: "விசா விண்ணப்பத்திற்கான ஆவண தயாரிப்பு மற்றும் சான்றிதழ்", icon: "fas fa-plane", documents: ["பாஸ்போர்ட்", "பால் ஸ்லிப் 6 மாதம்", "வங்கி பேலன்ஸ்", "வேலை சான்று", "புகைப்படம்"], isPredefined: true }
+        ];
+        let predefinedServices = [...originalPredefinedServices];
+        let customServices = [];
+        let currentService = { id: 0, name: "சேவையை தேர்ந்தெடுக்கவும்", category: "சேவை வகை", price: 0, description: "மேலே உள்ள பட்டன்களில் இருந்து ஒரு சேவையை தேர்ந்தெடுக்கவும்", icon: "fas fa-question-circle", documents: ["சேவையை தேர்ந்தெடுக்கவும்"], customDocuments: [], isPredefined: false };
+        let activeFilter = 'all';
+        let emailType = 'service_info'; // Default email type
+        
+        // ஆவண இணைப்புகள்
+        let attachments = [];
+        let statusAttachments = [];
+        let cloudLinks = [];
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAllServices(); updateDisplay(); updateWhatsAppMessage(); updateEmailMessage(); loadSavedData();
+            document.getElementById('serviceSearch').addEventListener('input', function() { renderServices(); });
+            document.getElementById('customerName').addEventListener('input', updateWhatsAppMessage);
+            document.getElementById('customerPhone').addEventListener('input', updateWhatsAppMessage);
+            
+            // Email event listeners
+            document.getElementById('emailCustomerName').addEventListener('input', updateEmailMessage);
+            document.getElementById('emailCustomerEmail').addEventListener('input', updateEmailMessage);
+            document.getElementById('senderEmail').addEventListener('input', updateEmailMessage);
+            
+            // நன்றி அறிவிப்பு event listeners
+            document.getElementById('thankYouCustomerName').addEventListener('input', updateThankYouMessage);
+            document.getElementById('thankYouCustomerPhone').addEventListener('input', updateThankYouMessage);
+            document.getElementById('thankYouServices').addEventListener('input', updateThankYouMessage);
+            document.getElementById('thankYouRefNumbers').addEventListener('input', updateThankYouMessage);
+            
+            // சேவை நிலை மெசேஜ் event listeners
+            document.getElementById('statusCustomerName').addEventListener('input', updateStatusMessage);
+            document.getElementById('statusCustomerPhone').addEventListener('input', updateStatusMessage);
+            document.getElementById('statusService').addEventListener('input', updateStatusMessage);
+            document.getElementById('statusRefNumber').addEventListener('input', updateStatusMessage);
+            document.getElementById('statusNote').addEventListener('input', updateStatusMessage);
+            document.getElementById('statusType').addEventListener('change', updateStatusMessage);
+            
+            // Initialize status message
+            updateStatusMessage();
+            
+            // Initialize drag and drop
+            initializeDragAndDrop();
+            
+            // Load saved attachments
+            loadAttachments();
+        });
+        
+        function loadAllServices() {
+            const savedPredefinedServices = localStorage.getItem('dhassPredefinedServices');
+            if (savedPredefinedServices) { try { predefinedServices = JSON.parse(savedPredefinedServices); } catch (e) { predefinedServices = [...originalPredefinedServices]; } }
+            const savedCustomServices = localStorage.getItem('dhassCustomServices');
+            if (savedCustomServices) { try { customServices = JSON.parse(savedCustomServices); } catch (e) { customServices = []; } }
+            renderServices(); updateServiceCount();
+        }
+        
+        // Email Message Functions
+        function updateEmailMessage() {
+            const customerName = document.getElementById('emailCustomerName').value || '[பெயர்]';
+            const customerEmail = document.getElementById('emailCustomerEmail').value || '[ஈமெயில்]';
+            const senderEmail = document.getElementById('senderEmail').value || 'dhasscsc@gmail.com';
+            
+            let subject = '';
+            let message = '';
+            
+            switch(emailType) {
+                case 'service_info':
+                    subject = `தாஸ் பொது சேவை மையம் - ${currentService.name}`;
+                    message = `அன்புள்ள ${customerName},\n\n`;
+                    message += `தாஸ் பொது சேவை மையத்தில் உங்களை வரவேற்கிறோம்!\n\n`;
+                    message += `சேவை விபரங்கள்:\n`;
+                    message += `• சேவை: ${currentService.name}\n`;
+                    message += `• வகை: ${currentService.category}\n`;
+                    message += `• கட்டணம்: ₹${currentService.price.toFixed(2)}\n\n`;
+                    if (currentService.description) {
+                        message += `சேவை விளக்கம்:\n${currentService.description}\n\n`;
+                    }
+                    const allDocuments = [...(currentService.customDocuments || currentService.documents || [])];
+                    if (allDocuments.length > 0) {
+                        message += `தேவையான ஆவணங்கள்:\n`;
+                        allDocuments.forEach((doc, index) => { message += `✓ ${doc}\n`; });
+                        message += `\n`;
+                    }
+                    message += `தொடர்பு கொள்ள:\n`;
+                    message += `தொலைபேசி: 8870232332, 9843232324\n`;
+                    message += `WhatsApp: 9843232324\n`;
+                    message += `ஈமெயில்: dhasscsc@gmail.com\n`;
+                    message += `முகவரி: தூத்துக்குடி-1\n\n`;
+                    message += `நன்றி,\nதாஸ் பொது சேவை மையம்\nதூத்துக்குடி-1`;
+                    break;
+                    
+                case 'documents_list':
+                    subject = `தாஸ் பொது சேவை மையம் - தேவையான ஆவணங்கள்`;
+                    message = `அன்புள்ள ${customerName},\n\n`;
+                    message += `தாஸ் பொது சேவை மையத்தில் ${currentService.name} சேவைக்கு தேவையான ஆவணங்களின் பட்டியல்.\n\n`;
+                    const docs = [...(currentService.customDocuments || currentService.documents || [])];
+                    if (docs.length > 0) {
+                        message += `தேவையான ஆவணங்கள்:\n`;
+                        docs.forEach((doc, index) => { 
+                            message += `${index + 1}. ${doc}\n`; 
+                        });
+                        message += `\n`;
+                    }
+                    message += `குறிப்புகள்:\n`;
+                    message += `• அனைத்து ஆவணங்களும் அசல் மற்றும் நகல் கொண்டு வரவும்\n`;
+                    message += `• புகைப்படங்கள் பாஸ்போர்ட் அளவு (3.5cm x 4.5cm)\n`;
+                    message += `• ஆவணங்கள் சரியாக இருக்கும் என உறுதி செய்யவும்\n\n`;
+                    message += `தொடர்பு எண்கள்: 8870232332, 9843232324\n\n`;
+                    message += `நன்றி,\nதாஸ் பொது சேவை மையம்`;
+                    break;
+                    
+                case 'quotation':
+                    subject = `தாஸ் பொது சேவை மையம் - விலைப்பட்டியல்`;
+                    message = `அன்புள்ள ${customerName},\n\n`;
+                    message += `தாஸ் பொது சேவை மையத்தில் ${currentService.name} சேவைக்கான விலைப்பட்டியல்.\n\n`;
+                    message += `சேவை: ${currentService.name}\n`;
+                    message += `வகை: ${currentService.category}\n`;
+                    message += `கட்டணம்: ₹${currentService.price.toFixed(2)}\n\n`;
+                    message += `சேவைக்கான செலவுகள்:\n`;
+                    message += `• சேவை கட்டணம்: ₹${currentService.price.toFixed(2)}\n`;
+                    message += `• ஸ்டாம்பு கட்டணம்: ₹${(currentService.price * 0.1).toFixed(2)} (மதிப்பீடு)\n`;
+                    message += `• மொத்த தொகை: ₹${(currentService.price * 1.1).toFixed(2)}\n\n`;
+                    message += `கட்டணம் செலுத்தும் முறைகள்:\n`;
+                    message += `• பணம்\n`;
+                    message += `• UPI (PhonePe, Google Pay)\n`;
+                    message += `• வங்கி பரிமாற்றம்\n\n`;
+                    message += `தொடர்பு எண்கள்: 8870232332, 9843232324\n\n`;
+                    message += `நன்றி,\nதாஸ் பொது சேவை மையம்`;
+                    break;
+                    
+                case 'reminder':
+                    subject = `தாஸ் பொது சேவை மையம் - நினைவூட்டல்`;
+                    const today = new Date();
+                    const tomorrow = new Date(today);
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    const formattedDate = tomorrow.toLocaleDateString('ta-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                    
+                    message = `அன்புள்ள ${customerName},\n\n`;
+                    message += `தாஸ் பொது சேவை மையத்தில் ${currentService.name} சேவை பற்றிய நினைவூட்டல்.\n\n`;
+                    message += `நாங்கள் உங்கள் ${currentService.name} சேவையை செயல்படுத்துகிறோம். பின்வரும் விஷயங்களை நினைவில் கொள்ளவும்:\n\n`;
+                    message += `1. தேவையான ஆவணங்களை கொண்டு வரவும்\n`;
+                    const docList = [...(currentService.customDocuments || currentService.documents || [])];
+                    if (docList.length > 0) {
+                        docList.forEach((doc, index) => { 
+                            message += `   - ${doc}\n`; 
+                        });
+                    }
+                    message += `\n2. கட்டணம்: ₹${currentService.price.toFixed(2)}\n\n`;
+                    message += `3. அடுத்த பயணத்திற்கு: ${formattedDate}\n\n`;
+                    message += `தொடர்பு எண்கள்: 8870232332, 9843232324\n\n`;
+                    message += `நன்றி,\nதாஸ் பொது சேவை மையம்`;
+                    break;
+            }
+            
+            document.getElementById('emailMessagePreview').textContent = message;
+        }
+        
+        function setEmailType(type) {
+            emailType = type;
+            
+            // Update active button
+            document.querySelectorAll('.email-option-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            updateEmailMessage();
+        }
+        
+        function testEmailMessage() {
+            const customerName = document.getElementById('emailCustomerName').value;
+            const customerEmail = document.getElementById('emailCustomerEmail').value;
+            
+            if (!customerName || !customerEmail) {
+                alert('தயவு செய்து வாடிக்கையாளர் பெயர் மற்றும் ஈமெயில் முகவரியை உள்ளிடவும்');
+                return;
+            }
+            
+            const message = document.getElementById('emailMessagePreview').textContent;
+            alert('ஈமெயில் செய்தி முன்னோட்டம்:\n\n' + message);
+        }
+        
+        function sendEmail() {
+            const customerName = document.getElementById('emailCustomerName').value;
+            const customerEmail = document.getElementById('emailCustomerEmail').value;
+            const senderEmail = document.getElementById('senderEmail').value;
+            
+            if (!customerName || !customerEmail) {
+                alert('தயவு செய்து வாடிக்கையாளர் பெயர் மற்றும் ஈமெயில் முகவரியை உள்ளிடவும்');
+                return;
+            }
+            
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(customerEmail)) {
+                alert('தயவு செய்து செல்லுபடியான ஈமெயில் முகவரியை உள்ளிடவும்');
+                return;
+            }
+            
+            let subject = '';
+            switch(emailType) {
+                case 'service_info': subject = `தாஸ் பொது சேவை மையம் - ${currentService.name}`; break;
+                case 'documents_list': subject = `தாஸ் பொது சேவை மையம் - தேவையான ஆவணங்கள்`; break;
+                case 'quotation': subject = `தாஸ் பொது சேவை மையம் - விலைப்பட்டியல்`; break;
+                case 'reminder': subject = `தாஸ் பொது சேவை மையம் - நினைவூட்டல்`; break;
+            }
+            
+            const message = document.getElementById('emailMessagePreview').textContent;
+            const encodedSubject = encodeURIComponent(subject);
+            const encodedBody = encodeURIComponent(message);
+            
+            // Create mailto link
+            const mailtoLink = `mailto:${customerEmail}?subject=${encodedSubject}&body=${encodedBody}`;
+            
+            // Open email client
+            window.open(mailtoLink);
+            
+            // Save email info
+            saveEmailInfo(customerName, customerEmail);
+            
+            alert(`ஈமெயில் தயார் செய்யப்பட்டது!\n\n${customerName} (${customerEmail})\nதாஸ் ஈமெயில்: ${senderEmail}`);
+        }
+        
+        function saveEmailInfo(name, email) {
+            const emailInfo = {
+                name: name,
+                email: email,
+                service: currentService.name,
+                date: new Date().toISOString(),
+                type: emailType
+            };
+            
+            // Save to localStorage
+            const savedEmails = JSON.parse(localStorage.getItem('dhassEmails') || '[]');
+            savedEmails.push(emailInfo);
+            localStorage.setItem('dhassEmails', JSON.stringify(savedEmails));
+        }
+        
+        // ஆவண இணைப்புகளை ஏற்றும் செயல்பாடு
+        function loadAttachments() {
+            const savedAttachments = localStorage.getItem('dhassAttachments');
+            if (savedAttachments) { try { attachments = JSON.parse(savedAttachments); } catch (e) { attachments = []; } }
+            
+            const savedStatusAttachments = localStorage.getItem('dhassStatusAttachments');
+            if (savedStatusAttachments) { try { statusAttachments = JSON.parse(savedStatusAttachments); } catch (e) { statusAttachments = []; } }
+            
+            const savedCloudLinks = localStorage.getItem('dhassCloudLinks');
+            if (savedCloudLinks) { try { cloudLinks = JSON.parse(savedCloudLinks); } catch (e) { cloudLinks = []; } }
+            
+            renderAttachments();
+            renderStatusAttachments();
+            renderCloudLinks();
+        }
+        
+        // ஆவண இணைப்புகளை காட்டுதல்
+        function renderAttachments() {
+            const attachmentList = document.getElementById('attachmentList');
+            attachmentList.innerHTML = '';
+            
+            if (attachments.length === 0 && cloudLinks.length === 0) {
+                attachmentList.innerHTML = '<div style="text-align: center; padding: 15px; opacity: 0.7;"><i class="fas fa-paperclip"></i> ஆவணங்கள் இணைக்கப்படவில்லை</div>';
+                return;
+            }
+            
+            // Cloud links first
+            cloudLinks.forEach((link, index) => {
+                const item = document.createElement('div');
+                item.className = 'attachment-item';
+                item.innerHTML = `
+                    <div class="attachment-info">
+                        <i class="fas fa-link"></i>
+                        <div>
+                            <div class="attachment-name">${link.name}</div>
+                            <div style="font-size: 11px; opacity: 0.7;">${link.type}</div>
+                        </div>
+                    </div>
+                    <div class="attachment-actions">
+                        <button class="attachment-btn" onclick="copyLink('${link.url}')"><i class="fas fa-copy"></i> நகல்</button>
+                        <button class="attachment-btn" onclick="removeCloudLink(${index})"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+                attachmentList.appendChild(item);
+            });
+            
+            // File attachments
+            attachments.forEach((file, index) => {
+                const item = document.createElement('div');
+                item.className = 'attachment-item';
+                item.innerHTML = `
+                    <div class="attachment-info">
+                        <i class="${getFileIcon(file.type)}"></i>
+                        <div>
+                            <div class="attachment-name">${file.name}</div>
+                            <div style="font-size: 11px; opacity: 0.7;">${formatFileSize(file.size)}</div>
+                        </div>
+                    </div>
+                    <div class="attachment-actions">
+                        <button class="attachment-btn" onclick="previewAttachment(${index})"><i class="fas fa-eye"></i> பார்வை</button>
+                        <button class="attachment-btn" onclick="removeAttachment(${index})"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+                attachmentList.appendChild(item);
+            });
+        }
+        
+        // சேவை நிலை ஆவண இணைப்புகளை காட்டுதல்
+        function renderStatusAttachments() {
+            const attachmentList = document.getElementById('statusAttachmentList');
+            attachmentList.innerHTML = '';
+            
+            if (statusAttachments.length === 0) {
+                attachmentList.innerHTML = '<div style="text-align: center; padding: 15px; opacity: 0.7;"><i class="fas fa-paperclip"></i> ஆவணங்கள் இணைக்கப்படவில்லை</div>';
+                return;
+            }
+            
+            statusAttachments.forEach((file, index) => {
+                const item = document.createElement('div');
+                item.className = 'attachment-item';
+                item.innerHTML = `
+                    <div class="attachment-info">
+                        <i class="${getFileIcon(file.type)}"></i>
+                        <div>
+                            <div class="attachment-name">${file.name}</div>
+                            <div style="font-size: 11px; opacity: 0.7;">${formatFileSize(file.size)}</div>
+                        </div>
+                    </div>
+                    <div class="attachment-actions">
+                        <button class="attachment-btn" onclick="previewStatusAttachment(${index})"><i class="fas fa-eye"></i> பார்வை</button>
+                        <button class="attachment-btn" onclick="removeStatusAttachment(${index})"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+                attachmentList.appendChild(item);
+            });
+        }
+        
+        // க்ளவுட் இணைப்புகளை காட்டுதல்
+        function renderCloudLinks() {
+            // Already rendered in renderAttachments
+        }
+        
+        // கோப்பு ஐகான் கிடைக்கும் செயல்பாடு
+        function getFileIcon(fileType) {
+            if (fileType.includes('pdf')) return 'fas fa-file-pdf';
+            if (fileType.includes('word') || fileType.includes('doc')) return 'fas fa-file-word';
+            if (fileType.includes('excel') || fileType.includes('sheet')) return 'fas fa-file-excel';
+            if (fileType.includes('image')) return 'fas fa-file-image';
+            if (fileType.includes('text')) return 'fas fa-file-alt';
+            return 'fas fa-file';
+        }
+        
+        // கோப்பு அளவை வடிவமைத்தல்
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // கோப்பு பதிவேற்றத்தை கையாளுதல்
+        function handleFileUpload(event) {
+            const files = event.target.files;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                // கோப்பு அளவு சரிபார்க்க (5MB வரம்பு)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert(`கோப்பு ${file.name} மிகப் பெரியது (அதிகபட்சம்: 5MB)`);
+                    continue;
+                }
+                
+                // FileReader மூலம் கோப்பைப் படிக்கவும்
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const fileData = {
+                        name: file.name,
+                        type: file.type,
+                        size: file.size,
+                        data: e.target.result,
+                        lastModified: file.lastModified
+                    };
+                    attachments.push(fileData);
+                    saveAttachments();
+                    renderAttachments();
+                    updateWhatsAppMessage();
+                };
+                reader.readAsDataURL(file);
+            }
+            
+            // உள்ளீட்டை மீட்டமைக்கவும்
+            event.target.value = '';
+        }
+        
+        // சேவை நிலை கோப்பு பதிவேற்றத்தை கையாளுதல்
+        function handleStatusFileUpload(event) {
+            const files = event.target.files;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                // கோப்பு அளவு சரிபார்க்க (5MB வரம்பு)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert(`கோப்பு ${file.name} மிகப் பெரியது (அதிகபட்சம்: 5MB)`);
+                    continue;
+                }
+                
+                // FileReader மூலம் கோப்பைப் படிக்கவும்
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const fileData = {
+                        name: file.name,
+                        type: file.type,
+                        size: file.size,
+                        data: e.target.result,
+                        lastModified: file.lastModified
+                    };
+                    statusAttachments.push(fileData);
+                    saveStatusAttachments();
+                    renderStatusAttachments();
+                    updateStatusMessage();
+                };
+                reader.readAsDataURL(file);
+            }
+            
+            // உள்ளீட்டை மீட்டமைக்கவும்
+            event.target.value = '';
+        }
+        
+        // இழுத்து விடுதல் செயல்பாடு
+        function initializeDragAndDrop() {
+            const uploadAreas = document.querySelectorAll('.upload-area');
+            
+            uploadAreas.forEach(area => {
+                area.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.style.borderColor = 'white';
+                    this.style.background = 'rgba(255,255,255,0.1)';
+                });
+                
+                area.addEventListener('dragleave', function(e) {
+                    e.preventDefault();
+                    this.style.borderColor = 'rgba(255,255,255,0.3)';
+                    this.style.background = 'transparent';
+                });
+                
+                area.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.style.borderColor = 'rgba(255,255,255,0.3)';
+                    this.style.background = 'transparent';
+                    
+                    const files = e.dataTransfer.files;
+                    const fileInput = this.parentElement.querySelector('.file-input');
+                    
+                    // Create a fake event to trigger the file input handler
+                    const event = new Event('change', { bubbles: true });
+                    Object.defineProperty(event, 'target', { value: { files: files } });
+                    
+                    if (fileInput.id === 'fileInput') {
+                        handleFileUpload(event);
+                    } else if (fileInput.id === 'statusFileInput') {
+                        handleStatusFileUpload(event);
+                    }
+                });
+            });
+        }
+        
+        // க்ளவுட் இணைப்பு சேர்க்க
+        function addCloudLink(type) {
+            // Set default values based on type
+            let defaultName = '';
+            let defaultUrl = '';
+            
+            switch(type) {
+                case 'google-drive':
+                    defaultName = 'Google Drive இணைப்பு';
+                    defaultUrl = 'https://drive.google.com/';
+                    break;
+                case 'dropbox':
+                    defaultName = 'Dropbox இணைப்பு';
+                    defaultUrl = 'https://www.dropbox.com/';
+                    break;
+                case 'onedrive':
+                    defaultName = 'OneDrive இணைப்பு';
+                    defaultUrl = 'https://onedrive.live.com/';
+                    break;
+            }
+            
+            document.getElementById('cloudLinkName').value = defaultName;
+            document.getElementById('cloudLinkUrl').value = defaultUrl;
+            document.getElementById('cloudLinkType').value = type;
+            document.getElementById('cloudLinkModal').classList.add('active');
+        }
+        
+        function closeCloudLinkModal() {
+            document.getElementById('cloudLinkModal').classList.remove('active');
+        }
+        
+        function addCloudLinkFromModal() {
+            const name = document.getElementById('cloudLinkName').value.trim();
+            const url = document.getElementById('cloudLinkUrl').value.trim();
+            const type = document.getElementById('cloudLinkType').value;
+            
+            if (!name || !url) {
+                alert('தயவு செய்து பெயர் மற்றும் URL உள்ளிடவும்');
+                return;
+            }
+            
+            // URL சரிபார்க்க
+            try {
+                new URL(url);
+            } catch (e) {
+                alert('சரியான URL உள்ளிடவும்');
+                return;
+            }
+            
+            const cloudLink = {
+                name: name,
+                url: url,
+                type: type,
+                date: new Date().toISOString()
+            };
+            
+            cloudLinks.push(cloudLink);
+            saveCloudLinks();
+            renderAttachments();
+            closeCloudLinkModal();
+            alert('க்ளவுட் இணைப்பு சேர்க்கப்பட்டது!');
+        }
+        
+        // இணைப்பை நீக்குதல்
+        function removeAttachment(index) {
+            if (confirm('இந்த ஆவணத்தை நீக்க விரும்புகிறீர்களா?')) {
+                attachments.splice(index, 1);
+                saveAttachments();
+                renderAttachments();
+                updateWhatsAppMessage();
+            }
+        }
+        
+        function removeStatusAttachment(index) {
+            if (confirm('இந்த ஆவணத்தை நீக்க விரும்புகிறீர்களா?')) {
+                statusAttachments.splice(index, 1);
+                saveStatusAttachments();
+                renderStatusAttachments();
+                updateStatusMessage();
+            }
+        }
+        
+        function removeCloudLink(index) {
+            if (confirm('இந்த க்ளவுட் இணைப்பை நீக்க விரும்புகிறீர்களா?')) {
+                cloudLinks.splice(index, 1);
+                saveCloudLinks();
+                renderAttachments();
+            }
+        }
+        
+        // ஆவணத்தை முன்னோட்டமிடுதல்
+        function previewAttachment(index) {
+            const file = attachments[index];
+            if (file.type.includes('image')) {
+                // படத்தை புதிய சாளரத்தில் காட்டு
+                const imgWindow = window.open('');
+                imgWindow.document.write(`<img src="${file.data}" style="max-width: 100%; height: auto;">`);
+            } else if (file.type.includes('pdf')) {
+                // PDF காட்டு
+                const pdfWindow = window.open('');
+                pdfWindow.document.write(`
+                    <iframe src="${file.data}" width="100%" height="100%" style="border: none;"></iframe>
+                    <p style="padding: 10px;"><a href="${file.data}" download="${file.name}">பதிவிறக்கு</a></p>
+                `);
+            } else {
+                // மற்ற கோப்புகள்
+                alert(`கோப்பு: ${file.name}\nஅளவு: ${formatFileSize(file.size)}\nவகை: ${file.type}\n\nஇந்த கோப்பு வகை பார்க்க முடியாது. பதிவிறக்கவும்.`);
+            }
+        }
+        
+        function previewStatusAttachment(index) {
+            const file = statusAttachments[index];
+            previewAttachment(index); // Use same function
+        }
+        
+        // இணைப்பை நகலெடுக்க
+        function copyLink(url) {
+            navigator.clipboard.writeText(url).then(() => {
+                alert('இணைப்பு நகலெடுக்கப்பட்டது!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+        
+        // ஆவண இணைப்புகளை சேமிக்க
+        function saveAttachments() {
+            // Only save metadata, not the actual file data (to avoid localStorage limits)
+            const attachmentsMetadata = attachments.map(att => ({
+                name: att.name,
+                type: att.type,
+                size: att.size,
+                lastModified: att.lastModified
+            }));
+            localStorage.setItem('dhassAttachments', JSON.stringify(attachmentsMetadata));
+        }
+        
+        function saveStatusAttachments() {
+            const attachmentsMetadata = statusAttachments.map(att => ({
+                name: att.name,
+                type: att.type,
+                size: att.size,
+                lastModified: att.lastModified
+            }));
+            localStorage.setItem('dhassStatusAttachments', JSON.stringify(attachmentsMetadata));
+        }
+        
+        function saveCloudLinks() {
+            localStorage.setItem('dhassCloudLinks', JSON.stringify(cloudLinks));
+        }
+        
+        // மீதமுள்ள செயல்பாடுகள்...
+        
+        function renderServices() {
+            const grid = document.getElementById('serviceButtonsGrid'); if (!grid) return; grid.innerHTML = '';
+            let filteredServices = [...predefinedServices, ...customServices];
+            if (activeFilter !== 'all') {
+                if (activeFilter === 'custom') { filteredServices = filteredServices.filter(s => !s.isPredefined); }
+                else { filteredServices = filteredServices.filter(s => s.category === activeFilter); }
+            }
+            const searchTerm = document.getElementById('serviceSearch').value.toLowerCase();
+            if (searchTerm) { filteredServices = filteredServices.filter(s => s.name.toLowerCase().includes(searchTerm) || s.category.toLowerCase().includes(searchTerm) || s.description.toLowerCase().includes(searchTerm)); }
+            filteredServices.forEach(service => {
+                const button = document.createElement('div');
+                button.className = `service-btn ${service.isPredefined ? '' : 'custom-service'}`;
+                button.innerHTML = `<div class="service-icon"><i class="${service.icon}"></i></div><div class="service-btn-name">${service.name}</div><div class="service-btn-category">${service.category}</div><div class="service-btn-price">₹${service.price.toFixed(2)}</div>${!service.isPredefined ? `<button class="delete-service-btn" onclick="deleteCustomService(${service.id})"><i class="fas fa-times"></i></button>` : ''}`;
+                button.addEventListener('click', function(e) { e.stopPropagation(); selectService(service); });
+                grid.appendChild(button);
+            });
+            updateServiceCount();
+        }
+        
+        function filterServices(category) {
+            activeFilter = category;
+            document.querySelectorAll('.filter-btn').forEach(btn => { btn.classList.remove('active'); if (btn.textContent.includes(category) || (category === 'all' && btn.textContent.includes('அனைத்தும்'))) { btn.classList.add('active'); } });
+            renderServices();
+        }
+        
+        function updateServiceCount() {
+            document.getElementById('totalServicesCount').textContent = predefinedServices.length + customServices.length;
+            document.getElementById('customServicesCount').textContent = customServices.length;
+            document.getElementById('predefinedServicesCount').textContent = predefinedServices.length;
+        }
+        
+        function selectService(service) {
+            document.querySelectorAll('.service-btn').forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            currentService = { ...service, customDocuments: currentService.id === service.id ? (currentService.customDocuments || [...service.documents]) : [...service.documents] };
+            updateDisplay(); updateDocumentsList(); updateWhatsAppMessage(); updateEmailMessage(); saveToLocalStorage();
+        }
+        
+        function updateDisplay() {
+            document.getElementById('serviceNameDisplay').textContent = currentService.name;
+            document.getElementById('serviceCategoryDisplay').textContent = currentService.category;
+            document.getElementById('servicePriceDisplay').textContent = `₹${currentService.price.toFixed(2)}`;
+            document.getElementById('serviceDescriptionDisplay').textContent = currentService.description;
+        }
+        
+        // WhatsApp செய்தியை புதுப்பிக்க (இணைப்புகளுடன்)
+        function updateWhatsAppMessage() {
+            const customerName = document.getElementById('customerName').value || 'வாடிக்கையாளர்';
+            let message = `தாஸ் பொது சேவை மையம் - சேவை விபரங்கள்\n\nவணக்கம் ${customerName}!\n\nசேவை: ${currentService.name}\nசேவை வகை: ${currentService.category}\nகட்டணம்: ₹${currentService.price.toFixed(2)}\n\n`;
+            if (currentService.description) { message += `விளக்கம்: ${currentService.description}\n\n`; }
+            const allDocuments = [...(currentService.customDocuments || currentService.documents || [])];
+            if (allDocuments.length > 0) {
+                message += `தேவையான ஆவணங்கள்:\n`; allDocuments.forEach((doc, index) => { message += `✓ ${doc}\n`; }); message += `\n`;
+            }
+            
+            // ஆவண இணைப்புகளை சேர்க்கவும்
+            if (attachments.length > 0 || cloudLinks.length > 0) {
+                message += `இணைக்கப்பட்ட ஆவணங்கள்:\n`;
+                cloudLinks.forEach((link, index) => {
+                    message += `🔗 ${link.name}: ${link.url}\n`;
+                });
+                attachments.forEach((file, index) => {
+                    message += `📎 ${file.name} (${formatFileSize(file.size)})\n`;
+                });
+                message += `\n`;
+            }
+            
+            message += `தொடர்பு கொள்ள:\n📞 8870232332\n📞 9843232324 (WhatsApp)\n📍 தூத்துக்குடி-1\n\nநன்றி! மீண்டும் வருக!`;
+            document.getElementById('messagePreview').textContent = message;
+        }
+        
+        function testWhatsAppMessage() {
+            const customerName = document.getElementById('customerName').value || 'வாடிக்கையாளர்';
+            let message = `தாஸ் பொது சேவை மையம் - சேவை விபரங்கள்\n\nவணக்கம் ${customerName}!\n\nசேவை: ${currentService.name}\nசேவை வகை: ${currentService.category}\nகட்டணம்: ₹${currentService.price.toFixed(2)}\n\n`;
+            if (currentService.description) { message += `விளக்கம்: ${currentService.description}\n\n`; }
+            const allDocuments = [...(currentService.customDocuments || currentService.documents || [])];
+            if (allDocuments.length > 0) {
+                message += `தேவையான ஆவணங்கள்:\n`; allDocuments.forEach((doc, index) => { message += `✓ ${doc}\n`; }); message += `\n`;
+            }
+            
+            // ஆவண இணைப்புகளை சேர்க்கவும்
+            if (attachments.length > 0 || cloudLinks.length > 0) {
+                message += `இணைக்கப்பட்ட ஆவணங்கள்:\n`;
+                cloudLinks.forEach((link, index) => {
+                    message += `🔗 ${link.name}: ${link.url}\n`;
+                });
+                attachments.forEach((file, index) => {
+                    message += `📎 ${file.name} (${formatFileSize(file.size)})\n`;
+                });
+                message += `\n`;
+            }
+            
+            message += `தொடர்பு கொள்ள:\n📞 8870232332\n📞 9843232324 (WhatsApp)\n📍 தூத்துக்குடி-1\n\nநன்றி! மீண்டும் வருக!`;
+            alert('WhatsApp செய்தி முன்னோட்டம்:\n\n' + message);
+        }
+        
+        function sendWhatsAppMessage() {
+            const customerName = document.getElementById('customerName').value;
+            const customerPhone = document.getElementById('customerPhone').value;
+            if (!customerName || !customerPhone) { alert('தயவு செய்து வாடிக்கையாளர் பெயர் மற்றும் தொலைபேசி எண்ணை உள்ளிடவும்'); return; }
+            const phoneRegex = /^[6-9]\d{9}$/; const cleanPhone = customerPhone.replace(/\D/g, '');
+            if (!phoneRegex.test(cleanPhone)) { alert('தயவு செய்து செல்லுபடியான இந்திய தொலைபேசி எண்ணை உள்ளிடவும் (10 இலக்கங்கள்)\n\nஎ.கா: 9843232324'); return; }
+            let message = `தாஸ் பொது சேவை மையம் - சேவை விபரங்கள்%0A%0Aவணக்கம் ${encodeURIComponent(customerName)}!%0A%0Aசேவை: ${encodeURIComponent(currentService.name)}%0Aசேவை வகை: ${encodeURIComponent(currentService.category)}%0Aகட்டணம்: ₹${currentService.price.toFixed(2)}%0A%0A`;
+            if (currentService.description) { message += `விளக்கம்: ${encodeURIComponent(currentService.description)}%0A%0A`; }
+            const allDocuments = [...(currentService.customDocuments || currentService.documents || [])];
+            if (allDocuments.length > 0) { message += `தேவையான ஆவணங்கள்:%0A`; allDocuments.forEach((doc, index) => { message += `✓ ${encodeURIComponent(doc)}%0A`; }); message += `%0A`; }
+            
+            // ஆவண இணைப்புகளை சேர்க்கவும்
+            if (attachments.length > 0 || cloudLinks.length > 0) {
+                message += `இணைக்கப்பட்ட ஆவணங்கள்:%0A`;
+                cloudLinks.forEach((link, index) => {
+                    message += `🔗 ${encodeURIComponent(link.name)}: ${encodeURIComponent(link.url)}%0A`;
+                });
+                attachments.forEach((file, index) => {
+                    message += `📎 ${encodeURIComponent(file.name)} (${formatFileSize(file.size)})%0A`;
+                });
+                message += `%0A`;
+            }
+            
+            message += `தொடர்பு கொள்ள:%0A📞 8870232332%0A📞 9843232324 (WhatsApp)%0A📍 தூத்துக்குடி-1%0A%0Aநன்றி! மீண்டும் வருக!`;
+            const whatsappUrl = `https://wa.me/91${cleanPhone}?text=${message}`;
+            window.open(whatsappUrl, '_blank'); saveCustomerInfo(customerName, cleanPhone);
+            alert(`WhatsApp செய்தி அனுப்பப்பட்டது!\n\n${customerName} (${cleanPhone})`);
+        }
+        
+        // சேவை நிலை செய்தியை புதுப்பிக்க (இணைப்புகளுடன்)
+        function updateStatusMessage() {
+            const customerName = document.getElementById('statusCustomerName').value || '[பெயர்]';
+            const service = document.getElementById('statusService').value || '[சேவை]';
+            const refNumber = document.getElementById('statusRefNumber').value || '[குறிப்பு எண்]';
+            const note = document.getElementById('statusNote').value || '';
+            const statusType = document.getElementById('statusType').value;
+            
+            // Update active status buttons
+            document.querySelectorAll('.status-option-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            let message = '';
+            const currentTime = new Date().toLocaleTimeString('ta-IN', {hour: '2-digit', minute:'2-digit'});
+            const currentDate = new Date().toLocaleDateString('ta-IN', {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'});
+            
+            switch(statusType) {
+                case 'welcome':
+                    document.querySelector('.status-option-btn:nth-child(1)').classList.add('active');
+                    message = `வணக்கம் ${customerName}! 👋\n\n`;
+                    message += `தாஸ் பொது சேவை மையத்திற்கு உங்களை வரவேற்கிறோம்! 😊\n\n`;
+                    message += `நீங்கள் கோரிய ${service} சேவைக்கு நாங்கள் உதவ மகிழ்ச்சியடைகிறோம்.\n\n`;
+                    message += `எங்கள் சேவைகள்:\n✓ அரசு சேவைகள்\n✓ ஆவண தயாரிப்பு\n✓ புகைப்படம் & அச்சிடுதல்\n✓ பாஸ்போர்ட் & விசா\n\n`;
+                    // ஆவண இணைப்புகள்
+                    if (statusAttachments.length > 0) {
+                        message += `இணைக்கப்பட்ட ஆவணங்கள்:\n`;
+                        statusAttachments.forEach((file, index) => {
+                            message += `📎 ${file.name} (${formatFileSize(file.size)})\n`;
+                        });
+                        message += `\n`;
+                    }
+                    message += `தொடர்பு எண்கள்:\n📞 88 70 23 23 32\n📞 98 43 23 23 24\n\n`;
+                    message += `நன்றி!\nதாஸ் பொது சேவை மையம்\nதூத்துக்குடி-1`;
+                    break;
+                    
+                case 'received':
+                    document.querySelector('.status-option-btn:nth-child(2)').classList.add('active');
+                    message = `வணக்கம் ${customerName}! ✅\n\n`;
+                    message += `உங்கள் ${service} கோரிக்கை வெற்றிகரமாக பெறப்பட்டது.`;
+                    if (refNumber && refNumber !== '[குறிப்பு எண்]') message += `\n\nகுறிப்பு எண்: ${refNumber}`;
+                    if (note) message += `\n\nகுறிப்பு: ${note}`;
+                    // ஆவண இணைப்புகள்
+                    if (statusAttachments.length > 0) {
+                        message += `\n\nஇணைக்கப்பட்ட ஆவணங்கள்:\n`;
+                        statusAttachments.forEach((file, index) => {
+                            message += `📎 ${file.name} (${formatFileSize(file.size)})\n`;
+                        });
+                    }
+                    message += `\n\nஉங்கள் கோரிக்கை விரைவில் செயல்படுத்தப்படும்.\n\n`;
+                    message += `நன்றி!\nதாஸ் பொது சேவை மையம்\nதூத்துக்குடி-1`;
+                    break;
+                    
+                default:
+                    document.querySelector('.status-option-btn:nth-child(2)').classList.add('active');
+                    message = `வணக்கம் ${customerName}! ✅\n\n`;
+                    message += `உங்கள் ${service} கோரிக்கை வெற்றிகரமாக பெறப்பட்டது.`;
+                    if (refNumber && refNumber !== '[குறிப்பு எண்]') message += `\n\nகுறிப்பு எண்: ${refNumber}`;
+                    if (note) message += `\n\nகுறிப்பு: ${note}`;
+                    // ஆவண இணைப்புகள்
+                    if (statusAttachments.length > 0) {
+                        message += `\n\nஇணைக்கப்பட்ட ஆவணங்கள்:\n`;
+                        statusAttachments.forEach((file, index) => {
+                            message += `📎 ${file.name} (${formatFileSize(file.size)})\n`;
+                        });
+                    }
+                    message += `\n\nஉங்கள் கோரிக்கை விரைவில் செயல்படுத்தப்படும்.\n\n`;
+                    message += `நன்றி!\nதாஸ் பொது சேவை மையம்\nதூத்துக்குடி-1`;
+            }
+            
+            document.getElementById('statusMessagePreview').textContent = message;
+        }
+        
+        function setStatusType(type) {
+            document.getElementById('statusType').value = type;
+            updateStatusMessage();
+        }
+
+        function testStatusMessage() {
+            const customerName = document.getElementById('statusCustomerName').value || '[பெயர்]';
+            const customerPhone = document.getElementById('statusCustomerPhone').value;
+            
+            if (!customerName || !customerPhone) {
+                alert('தயவு செய்து வாடிக்கையாளர் பெயர் மற்றும் தொலைபேசி எண்ணை உள்ளிடவும்');
+                return;
+            }
+            
+            const phoneRegex = /^[6-9]\d{9}$/;
+            const cleanPhone = customerPhone.replace(/\D/g, '');
+            
+            if (!phoneRegex.test(cleanPhone)) {
+                alert('தயவு செய்து செல்லுபடியான இந்திய தொலைபேசி எண்ணை உள்ளிடவும் (10 இலக்கங்கள்)');
+                return;
+            }
+            
+            const message = document.getElementById('statusMessagePreview').textContent;
+            alert('நிலை செய்தி முன்னோட்டம்:\n\n' + message);
+        }
+
+        function sendStatusMessage() {
+            const customerName = document.getElementById('statusCustomerName').value;
+            const customerPhone = document.getElementById('statusCustomerPhone').value;
+            const service = document.getElementById('statusService').value;
+            
+            if (!customerName || !customerPhone || !service) {
+                alert('தயவு செய்து வாடிக்கையாளர் பெயர், தொலைபேசி எண் மற்றும் சேவை விபரத்தை உள்ளிடவும்');
+                return;
+            }
+            
+            const phoneRegex = /^[6-9]\d{9}$/;
+            const cleanPhone = customerPhone.replace(/\D/g, '');
+            
+            if (!phoneRegex.test(cleanPhone)) {
+                alert('தயவு செய்து செல்லுபடியான இந்திய தொலைபேசி எண்ணை உள்ளிடவும் (10 இலக்கங்கள்)');
+                return;
+            }
+            
+            const message = document.getElementById('statusMessagePreview').textContent;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/91${cleanPhone}?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+            
+            alert(`சேவை நிலை செய்தி அனுப்பப்பட்டது!\n\n${customerName} (${cleanPhone})\nசேவை: ${service}`);
+        }
+        
+        // மீதமுள்ள செயல்பாடுகள்...
+        function openAddServiceModal() {
+            document.getElementById('addServiceModal').classList.add('active');
+        }
+        
+        function closeAddServiceModal() {
+            document.getElementById('addServiceModal').classList.remove('active');
+        }
+        
+        function saveNewService() {
+            const name = document.getElementById('newServiceName').value.trim();
+            const category = document.getElementById('newServiceCategory').value;
+            const price = parseFloat(document.getElementById('newServicePrice').value);
+            const description = document.getElementById('newServiceDescription').value.trim();
+            const documents = document.getElementById('newServiceDocuments').value.split('\n').filter(d => d.trim());
+            const icon = document.getElementById('newServiceIcon').value;
+            
+            if (!name || !category || isNaN(price)) {
+                alert('தயவு செய்து சேவையின் பெயர், வகை மற்றும் கட்டணத்தை உள்ளிடவும்');
+                return;
+            }
+            
+            const newId = Date.now();
+            const newService = {
+                id: newId,
+                name: name,
+                category: category,
+                price: price,
+                description: description || `${name} சேவை`,
+                icon: icon,
+                documents: documents.length > 0 ? documents : ['எந்த ஆவணமும் தேவையில்லை'],
+                isPredefined: false
+            };
+            
+            customServices.push(newService);
+            saveCustomServicesToStorage();
+            renderServices();
+            closeAddServiceModal();
+            
+            // Clear form
+            document.getElementById('newServiceName').value = '';
+            document.getElementById('newServicePrice').value = '';
+            document.getElementById('newServiceDescription').value = '';
+            document.getElementById('newServiceDocuments').value = '';
+            
+            alert('புதிய சேவை சேர்க்கப்பட்டது!');
+        }
+        
+        function deleteCustomService(id) {
+            if (confirm('இந்த சேவையை நீக்க விரும்புகிறீர்களா?')) {
+                customServices = customServices.filter(s => s.id !== id);
+                saveCustomServicesToStorage();
+                renderServices();
+                
+                if (currentService.id === id) {
+                    currentService = { id: 0, name: "சேவையை தேர்ந்தெடுக்கவும்", category: "சேவை வகை", price: 0, description: "மேலே உள்ள பட்டன்களில் இருந்து ஒரு சேவையை தேர்ந்தெடுக்கவும்", icon: "fas fa-question-circle", documents: ["சேவையை தேர்ந்தெடுக்கவும்"], customDocuments: [], isPredefined: false };
+                    updateDisplay();
+                    updateDocumentsList();
+                    updateWhatsAppMessage();
+                    updateEmailMessage();
+                }
+                
+                alert('சேவை நீக்கப்பட்டது!');
+            }
+        }
+        
+        function openEditServiceModal() {
+            if (currentService.id === 0) {
+                alert('தயவு செய்து முதலில் ஒரு சேவையை தேர்ந்தெடுக்கவும்');
+                return;
+            }
+            
+            document.getElementById('editServiceName').value = currentService.name;
+            document.getElementById('editServiceCategory').value = currentService.category;
+            document.getElementById('editServicePrice').value = currentService.price;
+            document.getElementById('editServiceDescription').value = currentService.description;
+            document.getElementById('editServiceDocuments').value = (currentService.customDocuments || currentService.documents || []).join('\n');
+            document.getElementById('editServiceIcon').value = currentService.icon;
+            
+            document.getElementById('editServiceModal').classList.add('active');
+        }
+        
+        function closeEditServiceModal() {
+            document.getElementById('editServiceModal').classList.remove('active');
+        }
+        
+        function saveEditedService() {
+            const name = document.getElementById('editServiceName').value.trim();
+            const category = document.getElementById('editServiceCategory').value;
+            const price = parseFloat(document.getElementById('editServicePrice').value);
+            const description = document.getElementById('editServiceDescription').value.trim();
+            const documents = document.getElementById('editServiceDocuments').value.split('\n').filter(d => d.trim());
+            const icon = document.getElementById('editServiceIcon').value;
+            
+            if (!name || !category || isNaN(price)) {
+                alert('தயவு செய்து சேவையின் பெயர், வகை மற்றும் கட்டணத்தை உள்ளிடவும்');
+                return;
+            }
+            
+            // Update current service
+            currentService.name = name;
+            currentService.category = category;
+            currentService.price = price;
+            currentService.description = description || `${name} சேவை`;
+            currentService.icon = icon;
+            currentService.customDocuments = documents.length > 0 ? documents : ['எந்த ஆவணமும் தேவையில்லை'];
+            
+            // Update in services array
+            if (currentService.isPredefined) {
+                const index = predefinedServices.findIndex(s => s.id === currentService.id);
+                if (index !== -1) {
+                    predefinedServices[index] = { ...predefinedServices[index], ...currentService };
+                    localStorage.setItem('dhassPredefinedServices', JSON.stringify(predefinedServices));
+                }
+            } else {
+                const index = customServices.findIndex(s => s.id === currentService.id);
+                if (index !== -1) {
+                    customServices[index] = { ...customServices[index], ...currentService };
+                    saveCustomServicesToStorage();
+                }
+            }
+            
+            updateDisplay();
+            updateDocumentsList();
+            updateWhatsAppMessage();
+            updateEmailMessage();
+            renderServices();
+            closeEditServiceModal();
+            
+            alert('சேவை திருத்தப்பட்டது!');
+        }
+        
+        function openAddDocumentModal() {
+            document.getElementById('addDocumentModal').classList.add('active');
+        }
+        
+        function closeAddDocumentModal() {
+            document.getElementById('addDocumentModal').classList.remove('active');
+            document.getElementById('newDocument').value = '';
+        }
+        
+        function addDocument() {
+            const newDoc = document.getElementById('newDocument').value.trim();
+            if (!newDoc) {
+                alert('தயவு செய்து ஆவணத்தின் பெயரை உள்ளிடவும்');
+                return;
+            }
+            
+            if (!currentService.customDocuments) {
+                currentService.customDocuments = [...currentService.documents];
+            }
+            
+            currentService.customDocuments.push(newDoc);
+            updateDocumentsList();
+            closeAddDocumentModal();
+            alert('புதிய ஆவணம் சேர்க்கப்பட்டது!');
+        }
+        
+        function openEditDocumentModal() {
+            if (currentService.id === 0) {
+                alert('தயவு செய்து முதலில் ஒரு சேவையை தேர்ந்தெடுக்கவும்');
+                return;
+            }
+            
+            const allDocuments = currentService.customDocuments || currentService.documents || [];
+            let docText = '';
+            allDocuments.forEach(doc => {
+                docText += doc + '\n';
+            });
+            
+            const modalContent = `
+                <div class="modal-header">ஆவணங்களை திருத்து</div>
+                <textarea id="editDocumentsText" class="modal-textarea" placeholder="ஒவ்வொரு வரியிலும் ஒரு ஆவணம்" style="min-height: 200px;">${docText}</textarea>
+                <div class="modal-buttons">
+                    <button type="button" class="btn-add" onclick="saveEditedDocuments()">சேமி</button>
+                    <button type="button" class="btn-cancel" onclick="closeEditDocumentModal()">ரத்து</button>
+                </div>
+            `;
+            
+            const modal = document.createElement('div');
+            modal.className = 'modal active';
+            modal.id = 'editDocumentModal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    ${modalContent}
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+        
+        function closeEditDocumentModal() {
+            const modal = document.getElementById('editDocumentModal');
+            if (modal) {
+                modal.remove();
+            }
+        }
+        
+        function saveEditedDocuments() {
+            const docText = document.getElementById('editDocumentsText').value;
+            const documents = docText.split('\n').filter(d => d.trim());
+            
+            currentService.customDocuments = documents.length > 0 ? documents : ['எந்த ஆவணமும் தேவையில்லை'];
+            updateDocumentsList();
+            closeEditDocumentModal();
+            alert('ஆவணங்கள் திருத்தப்பட்டன!');
+        }
+        
+        function updateDocumentsList() {
+            const documentsList = document.getElementById('documentsList');
+            documentsList.innerHTML = '';
+            
+            const allDocuments = currentService.customDocuments || currentService.documents || [];
+            
+            if (allDocuments.length === 0) {
+                documentsList.innerHTML = '<li class="document-item"><i class="fas fa-check-circle"></i><span>எந்த ஆவணமும் தேவையில்லை</span></li>';
+                return;
+            }
+            
+            allDocuments.forEach(doc => {
+                const li = document.createElement('li');
+                li.className = 'document-item';
+                li.innerHTML = `<i class="fas fa-check-circle"></i><span>${doc}</span>`;
+                documentsList.appendChild(li);
+            });
+        }
+        
+        // நன்றி அறிவிப்பு செய்திகள்
+        function updateThankYouMessage() {
+            const customerName = document.getElementById('thankYouCustomerName').value || '[பெயர்]';
+            const services = document.getElementById('thankYouServices').value || '[சேவைகள்]';
+            const refNumbers = document.getElementById('thankYouRefNumbers').value || '[குறிப்பு எண்கள்]';
+            
+            let message = `வணக்கம் ${customerName}!\n\n`;
+            message += `எங்கள் தாஸ் பொதுசேவை மையத்தை தேர்வு செய்து, வருகை புரிந்தமைக்கு, மிகவும் நன்றி.\n\n`;
+            
+            if (services !== '[சேவைகள்]') {
+                message += `சேவைகள்: ${services}\n`;
+            }
+            
+            if (refNumbers !== '[குறிப்பு எண்கள்]') {
+                message += `குறிப்பு எண்கள்: ${refNumbers}\n`;
+            }
+            
+            message += `\nஇந்த நாள் இனிதாக அமைய வாழ்த்துகிறோம்.\n\n`;
+            message += `நன்றி!\nதாஸ் பொது சேவை மையம்\nதூத்துக்குடி-1`;
+            
+            document.getElementById('thankYouMessagePreview').textContent = message;
+        }
+        
+        function testThankYouMessage() {
+            const message = document.getElementById('thankYouMessagePreview').textContent;
+            alert('நன்றி செய்தி முன்னோட்டம்:\n\n' + message);
+        }
+        
+        function sendThankYouMessage() {
+            const customerName = document.getElementById('thankYouCustomerName').value;
+            const customerPhone = document.getElementById('thankYouCustomerPhone').value;
+            
+            if (!customerName || !customerPhone) {
+                alert('தயவு செய்து வாடிக்கையாளர் பெயர் மற்றும் தொலைபேசி எண்ணை உள்ளிடவும்');
+                return;
+            }
+            
+            const phoneRegex = /^[6-9]\d{9}$/;
+            const cleanPhone = customerPhone.replace(/\D/g, '');
+            
+            if (!phoneRegex.test(cleanPhone)) {
+                alert('தயவு செய்து செல்லுபடியான இந்திய தொலைபேசி எண்ணை உள்ளிடவும் (10 இலக்கங்கள்)');
+                return;
+            }
+            
+            const message = document.getElementById('thankYouMessagePreview').textContent;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/91${cleanPhone}?text=${encodedMessage}`;
+            
+            window.open(whatsappUrl, '_blank');
+            
+            alert(`நன்றி செய்தி அனுப்பப்பட்டது!\n\n${customerName} (${cleanPhone})`);
+        }
+        
+        function saveServiceInfo() {
+            saveToLocalStorage();
+            alert('அனைத்து தகவல்களும் சேமிக்கப்பட்டன!');
+        }
+        
+        function saveToLocalStorage() {
+            localStorage.setItem('dhassCurrentService', JSON.stringify(currentService));
+            localStorage.setItem('dhassCustomerName', document.getElementById('customerName').value);
+            localStorage.setItem('dhassCustomerPhone', document.getElementById('customerPhone').value);
+            localStorage.setItem('dhassEmailCustomerName', document.getElementById('emailCustomerName').value);
+            localStorage.setItem('dhassEmailCustomerEmail', document.getElementById('emailCustomerEmail').value);
+            localStorage.setItem('dhassThankYouCustomerName', document.getElementById('thankYouCustomerName').value);
+            localStorage.setItem('dhassThankYouCustomerPhone', document.getElementById('thankYouCustomerPhone').value);
+            localStorage.setItem('dhassThankYouServices', document.getElementById('thankYouServices').value);
+            localStorage.setItem('dhassThankYouRefNumbers', document.getElementById('thankYouRefNumbers').value);
+        }
+        
+        function loadSavedData() {
+            const savedCurrentService = localStorage.getItem('dhassCurrentService');
+            if (savedCurrentService) {
+                try {
+                    currentService = JSON.parse(savedCurrentService);
+                    updateDisplay();
+                    updateDocumentsList();
+                } catch (e) {}
+            }
+            
+            const savedCustomerName = localStorage.getItem('dhassCustomerName');
+            if (savedCustomerName) document.getElementById('customerName').value = savedCustomerName;
+            
+            const savedCustomerPhone = localStorage.getItem('dhassCustomerPhone');
+            if (savedCustomerPhone) document.getElementById('customerPhone').value = savedCustomerPhone;
+            
+            const savedEmailCustomerName = localStorage.getItem('dhassEmailCustomerName');
+            if (savedEmailCustomerName) document.getElementById('emailCustomerName').value = savedEmailCustomerName;
+            
+            const savedEmailCustomerEmail = localStorage.getItem('dhassEmailCustomerEmail');
+            if (savedEmailCustomerEmail) document.getElementById('emailCustomerEmail').value = savedEmailCustomerEmail;
+            
+            const savedThankYouCustomerName = localStorage.getItem('dhassThankYouCustomerName');
+            if (savedThankYouCustomerName) document.getElementById('thankYouCustomerName').value = savedThankYouCustomerName;
+            
+            const savedThankYouCustomerPhone = localStorage.getItem('dhassThankYouCustomerPhone');
+            if (savedThankYouCustomerPhone) document.getElementById('thankYouCustomerPhone').value = savedThankYouCustomerPhone;
+            
+            const savedThankYouServices = localStorage.getItem('dhassThankYouServices');
+            if (savedThankYouServices) document.getElementById('thankYouServices').value = savedThankYouServices;
+            
+            const savedThankYouRefNumbers = localStorage.getItem('dhassThankYouRefNumbers');
+            if (savedThankYouRefNumbers) document.getElementById('thankYouRefNumbers').value = savedThankYouRefNumbers;
+            
+            updateWhatsAppMessage();
+            updateEmailMessage();
+            updateThankYouMessage();
+        }
+        
+        function saveCustomerInfo(name, phone) {
+            const customerInfo = {
+                name: name,
+                phone: phone,
+                service: currentService.name,
+                date: new Date().toISOString()
+            };
+            
+            const savedCustomers = JSON.parse(localStorage.getItem('dhassCustomers') || '[]');
+            savedCustomers.push(customerInfo);
+            localStorage.setItem('dhassCustomers', JSON.stringify(savedCustomers));
+        }
+        
+        function saveCustomServicesToStorage() {
+            localStorage.setItem('dhassCustomServices', JSON.stringify(customServices));
+        }
+        
+        function resetPredefinedServices() {
+            if (confirm('ரெடிமேட் சேவைகளை அசல் நிலைக்கு மீட்டமைக்க விரும்புகிறீர்களா?')) {
+                predefinedServices = [...originalPredefinedServices];
+                localStorage.setItem('dhassPredefinedServices', JSON.stringify(predefinedServices));
+                renderServices();
+                alert('ரெடிமேட் சேவைகள் மீட்டமைக்கப்பட்டன!');
+            }
+        }
+        
+        function clearAll() {
+            if (confirm('அனைத்து தகவல்களையும் அழிக்க விரும்புகிறீர்களா?')) {
+                localStorage.removeItem('dhassCurrentService');
+                localStorage.removeItem('dhassCustomerName');
+                localStorage.removeItem('dhassCustomerPhone');
+                localStorage.removeItem('dhassEmailCustomerName');
+                localStorage.removeItem('dhassEmailCustomerEmail');
+                localStorage.removeItem('dhassThankYouCustomerName');
+                localStorage.removeItem('dhassThankYouCustomerPhone');
+                localStorage.removeItem('dhassThankYouServices');
+                localStorage.removeItem('dhassThankYouRefNumbers');
+                
+                document.getElementById('customerName').value = '';
+                document.getElementById('customerPhone').value = '';
+                document.getElementById('emailCustomerName').value = '';
+                document.getElementById('emailCustomerEmail').value = '';
+                document.getElementById('thankYouCustomerName').value = '';
+                document.getElementById('thankYouCustomerPhone').value = '';
+                document.getElementById('thankYouServices').value = '';
+                document.getElementById('thankYouRefNumbers').value = '';
+                
+                currentService = { id: 0, name: "சேவையை தேர்ந்தெடுக்கவும்", category: "சேவை வகை", price: 0, description: "மேலே உள்ள பட்டன்களில் இருந்து ஒரு சேவையை தேர்ந்தெடுக்கவும்", icon: "fas fa-question-circle", documents: ["சேவையை தேர்ந்தெடுக்கவும்"], customDocuments: [], isPredefined: false };
+                
+                updateDisplay();
+                updateDocumentsList();
+                updateWhatsAppMessage();
+                updateEmailMessage();
+                updateThankYouMessage();
+                
+                alert('அனைத்து தகவல்களும் அழிக்கப்பட்டன!');
+            }
+        }
+        
+        function printPage() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
